@@ -17,7 +17,20 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
+    calendarEvent: async (parent, { _id }) => {
+      return User.findOne({ _id });
+    },
+    calendarEvents: async (parent, args, context) => {
+      if (context.user) {
+        return User.find();
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    calendarEvent: async (parent, { _id }) => {
+      return User.findOne({ _id });
+    },
   },
+  
   Mutation: {
     addUser: async (parent, { username, email, password }) => {
       const user = await User.create({ username, email, password });
@@ -39,7 +52,62 @@ const resolvers = {
 
       return { token, user };
     },
+    addCalendarEvent: async (parent, args, context) => {
+      if (context.user) {
+        return User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { calendarEvents: args } },
+          { new: true }
+        );
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    updateCalendarEvent: async (parent, args, context) => {
+      if (context.user) {
+        return User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { calendarEvents: args } },
+          { new: true }
+        );
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    deleteCalendarEvent: async (parent, args, context) => {
+      if (context.user) {
+        return User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { calendarEvents: { _id: args._id } } },
+          { new: true }
+        );
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    deleteAllCalendarEvents: async (parent, args, context) => {
+      if (context.user) {
+        return User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { calendarEvents: {} } },
+          { new: true }
+        );
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    deleteUser: async (parent, args, context) => {
+      if (context.user) {
+        return User.findOneAndDelete({ _id: context.user._id });
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    deleteAllUsers: async (parent, args, context) => {
+      if (context.user) {
+        return User.deleteMany({});
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
+
   },
+
 };
+  
 
 module.exports = resolvers;
