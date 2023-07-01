@@ -30,6 +30,11 @@ type User {
     getUser(username: String!): User!
     getUsers: [User]!
   }
+
+  type Qyery {
+    me: User
+  }
+    
    
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth!
