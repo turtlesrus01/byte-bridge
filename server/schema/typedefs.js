@@ -11,7 +11,7 @@ type User {
 
   type Auth {
     token: ID!
-    user: User
+    User: User
   }
   
   type CalendarEvent {
@@ -26,13 +26,15 @@ type User {
   
   type Query {
     getCalendarEvent(eventID: ID!): CalendarEvent!
-    getAllCalendarEvents: [CalendarEvent]!
     getUser(username: String!): User!
     getUsers: [User]!
   }
 
-  type Qyery {
-    me: User
+  type Query {
+    users: [User]
+    user(username: String!): User
+    calendarEvent(_id: ID!): User
+    calendarEvents: [User]
   }
     
    
@@ -40,7 +42,6 @@ type User {
     addUser(username: String!, email: String!, password: String!): Auth!
     login(email: String!, password: String!): Auth!
     addCalendarEvent(title: String!, description: String!, startDate: String!, endDate: String!, location: String!, userID: ID!): CalendarEvent!
-    updateCalendarEvent(eventID: ID!, title: String, description: String, startDate: String, endDate: String, location: String, userID: ID!): CalendarEvent!
     deleteCalendarEvent(eventID: ID!): CalendarEvent!
     deleteAllCalendarEvents: [CalendarEvent]!
     deleteUser(username: String!): User!

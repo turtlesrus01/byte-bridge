@@ -11,12 +11,6 @@ const resolvers = {
     user: async (parent, { username }) => {
       return User.findOne({ username });
     },
-    me: async (parent, args, context) => {
-      if (context.user) {
-        return User.findOne({ _id: context.user._id });
-      }
-      throw new AuthenticationError("You need to be logged in!");
-    },
     calendarEvent: async (parent, { _id }) => {
       return User.findOne({ _id });
     },
@@ -53,16 +47,6 @@ const resolvers = {
       return { token, user };
     },
     addCalendarEvent: async (parent, args, context) => {
-      if (context.user) {
-        return User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { calendarEvents: args } },
-          { new: true }
-        );
-      }
-      throw new AuthenticationError("You need to be logged in!");
-    },
-    updateCalendarEvent: async (parent, args, context) => {
       if (context.user) {
         return User.findOneAndUpdate(
           { _id: context.user._id },

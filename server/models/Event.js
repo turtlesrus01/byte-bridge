@@ -2,7 +2,7 @@ const {Schema, model} = require('mongoose');
 const bcrypt = require('bcrypt');
 const dateFormat = require('../utils/dateFormat.js');
 
-const calendarEventSchema = new Schema({
+const CalendarEventSchema = new Schema({
     ID: {type: String, required: true},
     title: {type: String, required: true},
     description: {type: String, required: true},
@@ -11,7 +11,7 @@ const calendarEventSchema = new Schema({
     location: {type: String, required: true},
 });
 
-calendarEventSchema.pre('save', async function (next) {
+CalendarEventSchema.pre('save', async function (next) {
     if (this.isNew ||!this.isModified('password')) {
         const saltRounds = 10;
         this.password = await bcrypt.hash(this.password, saltRounds);
@@ -19,11 +19,11 @@ calendarEventSchema.pre('save', async function (next) {
     next();
 });
 
-calendarEventSchema.methods.isCorrectPassword = async function (password) {
+CalendarEventSchema.methods.isCorrectPassword = async function (password) {
     return bcrypt.compare(password, this.password);
 };
 
-const CalendarEvent = model('CalendarEvent', calendarEventSchema);
+const CalendarEvent = model('CalendarEvent', CalendarEventSchema);
    
 module.exports = CalendarEvent;
 
