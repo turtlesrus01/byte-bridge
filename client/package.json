@@ -45,5 +45,8 @@
       "last 1 Firefox version",
       "last 1 Safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
   }
 }
