@@ -1,4 +1,7 @@
-const { AuthenticationError } = require("apollo-server-express");
+const {
+  AuthenticationError,
+  UserInputError,
+} = require("apollo-server-express");
 const { User } = require("../models");
 const { signToken } = require("../utils/auth");
 
@@ -24,22 +27,40 @@ const resolvers = {
       return User.findOne({ _id });
     },
   },
-  
+
   Mutation: {
     addUser: async (parent, { username, email, password }) => {
-      const user = await User.create({ username, email, password });
-      const token = signToken(user);
-      return { token, user };
+      try {
+        const user = await User.create({ username, email, password });
+        const token = signToken(user);
+        return { token, user };
+      } catch ({ name, code }) {
+        // Handle specific error cases
+        if (name === "ValidationError") {
+          // Handle validation errors
+          throw new UserInputError("Invalid input", {
+            invalidArgs: error.errors,
+          });
+        } else if (name === "MongoError" && code === 11000) {
+          // Handle duplicate key errors (e.g., unique email constraint)
+          throw new UserInputError("User with this email already exists");
+        } else {
+          // Handle generic or unexpected errors
+          throw new AuthenticationError("Failed to add user");
+        }
+      }
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
       if (!user) {
-        throw new AuthenticationError("Wrong credentials");
+        // User input error
+        throw new UserInputError("Wrong credentials");
       }
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw new AuthenticationError("Wrong credentials");
+        // User input error
+        throw new UserInputError("Wrong credentials");
       }
 
       const token = signToken(user);
@@ -88,10 +109,7 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-
   },
-
 };
-  
 
 module.exports = resolvers;
