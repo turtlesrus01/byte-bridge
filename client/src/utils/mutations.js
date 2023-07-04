@@ -50,3 +50,17 @@ mutation Mutation($eventId: ID!) {
   }
 }
 `;
+
+export const deleteAllCalendarEvents = gql`
+mutation DeleteAllCalendarEvents {
+  deleteAllCalendarEvents {
+    _id
+    title
+    description
+    startDate
+    endDate
+    location
+    userID
+  }
+}
+`;

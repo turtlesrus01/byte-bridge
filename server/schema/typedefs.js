@@ -45,7 +45,7 @@ type Mutation {
     userID: ID!
   ): CalendarEvent!
   deleteCalendarEvent(eventID: ID!): CalendarEvent!
-  deleteAllCalendarEvents: [CalendarEvent]!
+  deleteAllCalendarEvents: CalendarEvent!
   deleteUser(username: String!): User!
   deleteAllUsers: [User]!
 }
