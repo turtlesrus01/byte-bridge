@@ -15,16 +15,13 @@ const resolvers = {
       return User.findOne({ username });
     },
     calendarEvent: async (parent, { _id }) => {
-      return User.findOne({ _id });
+      return User.findById({ _id });
     },
     calendarEvents: async (parent, args, context) => {
       if (context.user) {
         return User.find();
       }
       throw new AuthenticationError("You need to be logged in!");
-    },
-    calendarEvent: async (parent, { _id }) => {
-      return User.findOne({ _id });
     },
   },
 
@@ -54,13 +51,13 @@ const resolvers = {
       const user = await User.findOne({ email });
       if (!user) {
         // User input error
-        throw new UserInputError("Wrong credentials");
+        throw new UserInputError("Invalid email or password");
       }
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
         // User input error
-        throw new UserInputError("Wrong credentials");
+        throw new UserInputError("Invalid email or password");
       }
 
       const token = signToken(user);
