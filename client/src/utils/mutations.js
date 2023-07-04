@@ -36,3 +36,17 @@ mutation AddCalendarEvent($title: String!, $description: String!, $startDate: St
   }
 }
 `;
+
+export const deleteCalendarEvent = gql`
+mutation Mutation($eventId: ID!) {
+  deleteCalendarEvent(eventID: $eventId) {
+    _id
+    title
+    description
+    startDate
+    endDate
+    location
+    userID
+  }
+}
+`;
