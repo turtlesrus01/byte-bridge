@@ -23,3 +23,16 @@ export const ADD_USER = gql`
     }
   }
 `;
+
+export const AddCalenderEvent = gql`
+mutation AddCalendarEvent($title: String!, $description: String!, $startDate: String!, $endDate: String!, $location: String!, $userId: ID!) {
+  addCalendarEvent(title: $title, description: $description, startDate: $startDate, endDate: $endDate, location: $location, userID: $userId) {
+    title
+    description
+    startDate
+    endDate
+    location
+    userID
+  }
+}
+`;
