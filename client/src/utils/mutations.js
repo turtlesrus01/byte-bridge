@@ -64,3 +64,25 @@ mutation DeleteAllCalendarEvents {
   }
 }
 `;
+
+export const deleteUser = gql`
+mutation Mutation($username: String!) {
+  deleteUser(username: $username) {
+    _id
+    username
+    email
+    password
+  }
+}
+`;
+
+export const deleteAllUsers = gql`
+mutation DeleteAllUsers {
+  deleteAllUsers {
+    _id
+    username
+    email
+    password
+  }
+}
+`;
