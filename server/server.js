@@ -2,7 +2,7 @@ const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
 const { authMiddleware } = require('./utils/auth');
-//const nodemailer = require('nodemailer');
+// const nodemailer = require('nodemailer');
 const { typeDefs, resolvers } = require('./schema');
 const db = require('./config/connection');
 require('dotenv').config();
@@ -62,6 +62,8 @@ const startApolloServer = async () => {
   //   subject: "Nodemailer API",
   //   text: "Hi from your nodemailer API",
   //  };
+  
+  //  transporter.sendMail(mailOptions, (err, info) => {
   //  transporter.sendMail(mailOptions, function (err, data) {
   //   console.log("Recipient Email:", process.env.EMAIL);
 
