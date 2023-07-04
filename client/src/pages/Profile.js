@@ -6,7 +6,7 @@ const Profile = () => {
     <div>
       <p>Profile</p>
       <Grid container>
-        
+        <h1>Profile</h1>
         <TextField>Hello</TextField>
       </Grid>
     </div>

@@ -54,16 +54,17 @@ const resolvers = {
         throw new UserInputError("Invalid email or password");
       }
       const correctPw = await user.isCorrectPassword(password);
-
+    
       if (!correctPw) {
         // User input error
         throw new UserInputError("Invalid email or password");
       }
-
+    
       const token = signToken(user);
-
-      return { token, user };
-    },
+      // This returns a user object with a token 
+      return { token, user }; 
+    
+    },    
     addCalendarEvent: async (parent, args, context) => {
       if (context.user) {
         return User.findOneAndUpdate(

@@ -10,7 +10,7 @@ type User {
 
 type Auth {
   token: ID!
-  User: User
+  user: User
 }
 
 type CalendarEvent {
