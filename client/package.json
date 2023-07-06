@@ -21,6 +21,8 @@
     "mui-date-picker": "^0.1.10",
     "react": "^18.2.0",
     "react-awesome-calendar": "^1.0.14",
+    "react-big-calendar": "^1.8.1",
+    "react-datepicker": "^4.15.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.14.0",
     "react-scripts": "^5.0.0",
