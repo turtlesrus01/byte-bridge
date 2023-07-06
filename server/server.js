@@ -2,8 +2,6 @@ const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
 const path = require("path");
 const { authMiddleware } = require("./utils/auth");
-//nodemailer code function
-const { sendEmailNotification } = require("./email/emailSender");
 const { typeDefs, resolvers } = require("./schema");
 const db = require("./config/connection");
 require("dotenv").config();
@@ -39,16 +37,6 @@ const startApolloServer = async () => {
       console.log(
         `Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`
       );
-
-      // Send an email notification
-      const emailOptions = {
-        subject: "Test",
-        text: "I am sending an email from nodemailer!",
-        to: "keasiley@icloud.com",
-        from: process.env.EMAIL,
-      };
-
-      sendEmailNotification(emailOptions);
     });
   });
 };
