@@ -1,6 +1,7 @@
 const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
+require("dotenv").config();
 
 // Nodemailer Setup
 const sendEmailNotification = async (emailOptions) => {
@@ -14,13 +15,17 @@ const sendEmailNotification = async (emailOptions) => {
     oauth2Client.setCredentials({
       refresh_token: process.env.REFRESH_TOKEN,
     });
+    
+    const accessToken = await oauth2Client.getAccessToken();
 
-    const accessToken = await new Promise((resolve, reject) => {
-      oauth2Client.getAccessToken((err, token) => {
-        if (err) {
-          reject(err); // Pass the error as a reason for rejection
-        }
-        resolve(token);
+    oauth2Client.on('tokens', (tokens) => {
+      if (tokens.refresh_token) {
+        // Save the new refresh token if it's returned
+        process.env.REFRESH_TOKEN = tokens.refresh_token;
+      }
+      // Save the new access token
+      oauth2Client.setCredentials({
+        access_token: tokens.access_token,
       });
     });
 
@@ -42,12 +47,7 @@ const sendEmailNotification = async (emailOptions) => {
   }
 };
 
-sendEmail({
-  subject: "Test",
-  text: "I am sending an email from nodemailer!",
-  to: "keasiley@icloud.com",
-  from: process.env.EMAIL,
-});
+
 // Example options
 const emailOptions = {
   subject: "Test",
@@ -55,6 +55,8 @@ const emailOptions = {
   to: "keasiley@icloud.com",
   from: process.env.EMAIL,
 };
+
+sendEmailNotification(emailOptions);
 
 module.exports = {
   sendEmailNotification,
