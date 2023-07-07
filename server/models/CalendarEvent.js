@@ -1,14 +1,13 @@
 const {Schema, model} = require('mongoose');
 const bcrypt = require('bcrypt');
-const dateFormat = require('../utils/dateFormat.js');
 
 const CalendarEventSchema = new Schema({
-    ID: {type: String, required: true},
     title: {type: String, required: true},
     description: {type: String, required: true},
-    starDate: {type: Date, default: Date.now, required: true},
+    startDate: {type: Date, default: Date.now, required: true},
     endDate: {type: Date, default: Date.now, required: true},
     location: {type: String, required: true},
+    userID: { type: Schema.Types.ObjectId, ref: 'User', required: true },
 });
 
 CalendarEventSchema.pre('save', async function (next) {
