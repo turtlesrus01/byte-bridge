@@ -20,6 +20,7 @@ type CalendarEvent {
   startDate: String!
   endDate: String!
   location: String!
+  allDay: Boolean!
   userID: ID!
 }
 
@@ -37,14 +38,22 @@ type Mutation {
   addUser(username: String!, email: String!, password: String!): Auth!
   login(email: String!, password: String!): Auth!
   addCalendarEvent(
-    title: String!
-    description: String!
+    _id: ID!
+  title: String!
+  description: String!
+  startDate: String!
+  endDate: String!
+  location: String!
+  allDay: Boolean!
+  userID: ID!
+  ): CalendarEvent!
+  
+  updateCalendarEvent(
+    UserID: ID!
     startDate: String!
     endDate: String!
-    location: String!
-    userID: ID!
-  ): CalendarEvent!
-  deleteCalendarEvent(eventID: ID!): CalendarEvent!
+    location: String!): CalendarEvent!
+    deleteCalendarEvent(eventID: ID!): CalendarEvent!
   deleteAllCalendarEvents: CalendarEvent!
   deleteUser(username: String!): User!
   deleteAllUsers: [User]!

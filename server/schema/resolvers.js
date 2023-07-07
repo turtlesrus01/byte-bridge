@@ -75,6 +75,16 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
+    updateCalendarEvent: async (parent, args, context) => {
+      if (context.user) {
+        return User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $set: { calendarEvents: args } },
+          { new: true }
+        );
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
     deleteCalendarEvent: async (parent, args, context) => {
       if (context.user) {
         return User.findOneAndUpdate(

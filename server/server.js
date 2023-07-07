@@ -2,9 +2,6 @@ const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
 const { authMiddleware } = require('./utils/auth');
-const nodemailer = require('nodemailer');
-const { google } = require("googleapis");
-const OAuth2 = google.auth.OAuth2;
 const { typeDefs, resolvers } = require('./schema');
 const db = require('./config/connection');
 require('dotenv').config();
@@ -41,61 +38,6 @@ const startApolloServer = async () => {
     })
   })
 
-  // Nodemailer Setup
-  const createTransporter = async () => {
-    const oauth2Client = new OAuth2(
-      process.env.CLIENT_ID,
-      process.env.CLIENT_SECRET,
-      "https://developers.google.com/oauthplayground"
-    );
-  
-    oauth2Client.setCredentials({
-      refresh_token: process.env.REFRESH_TOKEN
-    });
-  
-    try {
-      const accessToken = await new Promise((resolve, reject) => {
-        oauth2Client.getAccessToken((err, token) => {
-          if (err) {
-            reject(err); // Pass the error as a reason for rejection
-          }
-          resolve(token);
-        });
-      });
-  
-      const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          type: "OAuth2",
-          user: process.env.EMAIL,
-          accessToken,
-          clientId: process.env.CLIENT_ID,
-          clientSecret: process.env.CLIENT_SECRET,
-          refreshToken: process.env.REFRESH_TOKEN
-        }
-      });
-  
-      return transporter;
-    } catch (error) {
-      throw new Error("Failed to create transporter: " + error.message);
-    }
-  };
-  
-  const sendEmail = async (emailOptions) => {
-    try {
-      let emailTransporter = await createTransporter();
-      await emailTransporter.sendMail(emailOptions);
-    } catch (error) {
-      console.error("Error sending email:", error.message);
-    }
-  };
-  
-  sendEmail({
-    subject: "Test",
-    text: "I am sending an email from nodemailer!",
-    to: "keasiley@icloud.com",
-    from: process.env.EMAIL
-  });
   
 
   };

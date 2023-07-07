@@ -23,19 +23,21 @@ export const ADD_USER = gql`
     }
   }
 `;
-
-export const AddCalenderEvent = gql`
-mutation AddCalendarEvent($title: String!, $description: String!, $startDate: String!, $endDate: String!, $location: String!, $userId: ID!) {
-  addCalendarEvent(title: $title, description: $description, startDate: $startDate, endDate: $endDate, location: $location, userID: $userId) {
+const addCalendarEvent = gql`
+mutation AddCalendarEvent($id: ID!, $title: String!, $description: String!, $startDate: String!, $endDate: String!, $location: String!, $allDay: Boolean!, $userId: ID!) {
+  addCalendarEvent(_id: $id, title: $title, description: $description, startDate: $startDate, endDate: $endDate, location: $location, allDay: $allDay, userID: $userId) {
+    _id
     title
     description
     startDate
     endDate
     location
+    allDay
     userID
   }
 }
 `;
+
 
 export const deleteCalendarEvent = gql`
 mutation Mutation($eventId: ID!) {
@@ -86,3 +88,14 @@ mutation DeleteAllUsers {
   }
 }
 `;
+export const UpdateCalendarEvent = gql`
+mutation UpdateCalendarEvent($userId: ID!, $startDate: String!, $endDate: String!, $location: String!) {
+  updateCalendarEvent(UserID: $userId, startDate: $startDate, endDate: $endDate, location: $location) {
+    userID
+    startDate
+    endDate
+    location
+  }
+}
+`;
+
