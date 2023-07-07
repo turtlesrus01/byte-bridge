@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../utils/mutations";
 //MUI components
-import { Button, TextField, Grid, Snackbar } from "@mui/material";
+import { Button, TextField, Grid, Snackbar, Modal, Box } from "@mui/material";
 import MuiAlert from "@mui/material/Alert"; 
 
 import Auth from "../utils/auth";
@@ -11,6 +11,15 @@ import Auth from "../utils/auth";
 const Login = (props) => {
   const [formState, setFormState] = useState({ email: "", password: "" });
   const [login, { error, data }] = useMutation(LOGIN_USER);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleModalOpen = () => {
+    setModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
   // State change based on form input
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -31,7 +40,7 @@ const Login = (props) => {
     } catch (e) {
       console.error(e);
     }
-    // clear values after submit
+    // Clear values after submit
     setFormState({
       email: "",
       password: "",
@@ -52,44 +61,48 @@ const Login = (props) => {
                 </MuiAlert>
               </Snackbar>
             ) : (
-              <form onSubmit={handleFormSubmit}>
-                <Grid container spacing={2}> {/* Use MUI Grid for layout */}
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      label="Your email" 
-                      name="email"
-                      type="email"
-                      value={formState.email}
-                      onChange={handleChange}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      label="******" 
-                      name="password"
-                      type="password"
-                      value={formState.password}
-                      onChange={handleChange}
-                    />
-                  </Grid>
-                </Grid>
-                <Button
-                  variant="contained" 
-                  color="primary"
-                  style={{ cursor: 'pointer' }}
-                  type="submit"
-                >
-                  Submit
+              <>
+                <Button variant="contained" color="primary" onClick={handleModalOpen}>
+                  Open Login Modal
                 </Button>
-              </form>
-            )}
 
-            {error && (
-              <div className="my-3 p-3 bg-danger text-white">
-                {error.message}
-              </div>
+                <Modal open={modalOpen} onClose={handleModalClose}>
+                  <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'background.paper', boxShadow: 24, p: 4, width: '300px' }}>
+                    <form onSubmit={handleFormSubmit}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                          <TextField
+                            fullWidth
+                            label="Your email"
+                            name="email"
+                            type="email"
+                            value={formState.email}
+                            onChange={handleChange}
+                          />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <TextField
+                            fullWidth
+                            label="******"
+                            name="password"
+                            type="password"
+                            value={formState.password}
+                            onChange={handleChange}
+                          />
+                        </Grid>
+                      </Grid>
+                      <Button variant="contained" color="primary" type="submit" style={{ marginTop: '10px' }}>
+                        Submit
+                      </Button>
+                    </form>
+                    {error && (
+                      <div className="my-3 p-3 bg-danger text-white">
+                        {error.message}
+                      </div>
+                    )}
+                  </Box>
+                </Modal>
+              </>
             )}
           </div>
         </div>
