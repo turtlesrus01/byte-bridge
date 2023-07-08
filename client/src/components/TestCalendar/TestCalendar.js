@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import Calendar from 'react-calendar';
-import './App.css';
+import '../../../src/App.css';
 // import 'react-calendar/dist/Calendar.css';
  
 function TestCalendar() {
   const [date, setDate] = useState(new Date([
-    new Date(2022, 1, 1),
-    new Date(2025, 1, 1),
+    new Date().getFullYear(),
+    new Date().getMonth(),
+    new Date().getDate(),
+    
   ]));
  
   return (
     <div className='app'>
-      <h1 className='text-center'>React Calendar with Range</h1>
+      <h1 className='text-center'>Book Your Appointment with Your Realtor</h1>
       <div className='calendar-container'>
         <Calendar
           onChange={setDate}
