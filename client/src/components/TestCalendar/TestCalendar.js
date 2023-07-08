@@ -3,7 +3,7 @@ import Calendar from 'react-calendar';
 import './App.css';
 // import 'react-calendar/dist/Calendar.css';
  
-function App() {
+function TestCalendar() {
   const [date, setDate] = useState(new Date([
     new Date(2022, 1, 1),
     new Date(2025, 1, 1),
@@ -49,4 +49,4 @@ function App() {
 }
 
  
-export default App;
+export default TestCalendar;
