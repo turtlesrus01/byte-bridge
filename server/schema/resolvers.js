@@ -27,6 +27,7 @@ const resolvers = {
 
   Mutation: {
     addUser: async (parent, { username, email, password }) => {
+      console.log("Received variables:", username, email, password);
       try {
         const user = await User.create({ username, email, password });
         const token = signToken(user);
@@ -36,7 +37,7 @@ const resolvers = {
         if (name === "ValidationError") {
           // Handle validation errors
           throw new UserInputError("Invalid input", {
-            invalidArgs: error.errors,
+            invalidArgs: code.errors,
           });
         } else if (name === "MongoError" && code === 11000) {
           // Handle duplicate key errors (e.g., unique email constraint)
@@ -61,6 +62,7 @@ const resolvers = {
       }
     
       const token = signToken(user);
+      console.log("Generated token:", token);
       // This returns a user object with a token 
       return { token, user }; 
     
@@ -70,6 +72,16 @@ const resolvers = {
         return User.findOneAndUpdate(
           { _id: context.user._id },
           { $addToSet: { calendarEvents: args } },
+          { new: true }
+        );
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    updateCalendarEvent: async (parent, args, context) => {
+      if (context.user) {
+        return User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $set: { calendarEvents: args } },
           { new: true }
         );
       }
