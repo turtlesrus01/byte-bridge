@@ -27,6 +27,7 @@ const resolvers = {
 
   Mutation: {
     addUser: async (parent, { username, email, password }) => {
+      console.log("Received variables:", username, email, password);
       try {
         const user = await User.create({ username, email, password });
         const token = signToken(user);
@@ -61,6 +62,7 @@ const resolvers = {
       }
     
       const token = signToken(user);
+      console.log("Generated token:", token);
       // This returns a user object with a token 
       return { token, user }; 
     
