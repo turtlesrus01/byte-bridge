@@ -16,6 +16,8 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import TestCalendar from "./components/TestCalendar/TestCalendar";
+// import Calendar from "./pages/Calendar";
 
 // GraphQL endpoint
 const httpLink = createHttpLink({
@@ -70,6 +72,10 @@ function App() {
               <Route 
                 path="/profiles/:username"
                 element={<Profile />}
+              />
+              <Route 
+                path="/testcalendar"
+                element={<TestCalendar />}
               />
             </Routes>
           </div>
