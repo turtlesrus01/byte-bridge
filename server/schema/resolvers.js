@@ -36,7 +36,7 @@ const resolvers = {
         if (name === "ValidationError") {
           // Handle validation errors
           throw new UserInputError("Invalid input", {
-            invalidArgs: error.errors,
+            invalidArgs: code.errors,
           });
         } else if (name === "MongoError" && code === 11000) {
           // Handle duplicate key errors (e.g., unique email constraint)
