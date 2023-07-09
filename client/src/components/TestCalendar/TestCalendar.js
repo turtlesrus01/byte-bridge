@@ -1,53 +1,108 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "../../../src/App.css";
-//MUI
 import { Typography } from "@mui/material";
-// import 'react-calendar/dist/Calendar.css';
+import { addCalendarEvent, 
+      deleteCalendarEvent, 
+      deleteAllCalendarEvents, 
+      UpdateCalendarEvent } 
+  from "../../../src/utils/mutations";
+  import { Button } from "@mui/material";
 
-function TestCalendar() {
-  const [date, setDate] = useState(
-    new Date([
-      new Date().getFullYear(),
-      new Date().getMonth(),
-      new Date().getDate(),
-    ])
-  );
 
-  return (
-    <div className="app">
-      <Typography variant="h4">
-        Book Your Appointment with Your Realtor
-      </Typography>
-      <div className="calendar-container">
-        <Calendar onChange={setDate} value={date} selectRange={true} />
+  function TestCalendar() {
+    const [date, setDate] = useState(new Date());
+  
+    const handleDateChange = async (selectedDate) => {
+      setDate(selectedDate);
+    };
+  
+    const handleAddEvent = async () => {
+      try {
+        const response = await addCalendarEvent(date);
+        console.log("Event added:", response);
+        // Perform any other operations or display notifications/alerts based on the response
+      } catch (error) {
+        console.error("Error adding event:", error);
+        // Display an error notification or handle the error gracefully
+      }
+    };
+  
+    const handleDeleteEvent = async () => {
+      try {
+        const response = await deleteCalendarEvent(date);
+        console.log("Event deleted:", response);
+        // Perform any other operations or display notifications/alerts based on the response
+      } catch (error) {
+        console.error("Error deleting event:", error);
+        // Display an error notification or handle the error gracefully
+      }
+    };
+  
+    const handleDeleteAllEvents = async () => {
+      try {
+        const response = await deleteAllCalendarEvents();
+        console.log("All events deleted:", response);
+        // Perform any other operations or display notifications/alerts based on the response
+      } catch (error) {
+        console.error("Error deleting all events:", error);
+        // Display an error notification or handle the error gracefully
+      }
+    };
+  
+    const handleUpdateEvent = async () => {
+      try {
+        const response = await UpdateCalendarEvent(date);
+        console.log("Event updated:", response);
+        // Perform any other operations or display notifications/alerts based on the response
+      } catch (error) {
+        console.error("Error updating event:", error);
+        // Display an error notification or handle the error gracefully
+      }
+    };
+  
+    const renderSelectedDate = () => {
+      if (Array.isArray(date)) {
+        return (
+          <Typography variant="body1" align="center">
+            <span className="bold">Start:</span> {date[0].toDateString()} |{" "}
+            <span className="bold">End:</span> {date[1].toDateString()}
+          </Typography>
+        );
+      } else {
+        return (
+          <Typography variant="body1" align="center">
+            <span className="bold">Selected date:</span> {date.toDateString()}
+          </Typography>
+        );
+      }
+    };
+  
+    return (
+      <div className="app">
+        <Typography variant="h4">
+          Book Your Appointment with Your Realtor
+        </Typography>
+        <div className="calendar-container">
+          <Calendar onChange={handleDateChange} value={date} selectRange={true} />
+        </div>
+        {renderSelectedDate()}
+        <div className="buttons-container">
+          <Button variant="contained" onClick={handleAddEvent}>
+            Add Event
+          </Button>
+          <Button variant="contained" onClick={handleDeleteEvent}>
+            Delete Event
+          </Button>
+          <Button variant="contained" onClick={handleDeleteAllEvents}>
+            Delete All Events
+          </Button>
+          <Button variant="contained" onClick={handleUpdateEvent}>
+            Update Event
+          </Button>
+        </div>
       </div>
-      {date.length > 0 ? (
-        <Typography variant="body1" align="center">
-          <span className="bold">Start:</span> {date[0].toDateString()}
-          &nbsp;|&nbsp;
-          <span className="bold">End:</span> {date[1].toDateString()}
-        </Typography>
-      ) : (
-        <Typography variant="body1" align="center">
-          <span className="bold">Default selected date:</span>{" "}
-          {date.toDateString()}
-        </Typography>
-      )}
-      <Calendar
-        onChange={setDate}
-        value={date}
-        nextLabel="month>>"
-        nextAriaLabel="Go to next month"
-        next2Label="year>>"
-        next2AriaLabel="Go to next year"
-        prevLabel="<<month"
-        prevAriaLabel="Go to prev month"
-        prev2Label="<<year"
-        prev2AriaLabel="Go to prev year"
-      />
-    </div>
-  );
-}
-
-export default TestCalendar;
+    );
+  }
+  
+  export default TestCalendar;
