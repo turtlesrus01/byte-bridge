@@ -6,61 +6,108 @@ import { addCalendarEvent,
       deleteCalendarEvent, 
       deleteAllCalendarEvents, 
       UpdateCalendarEvent } 
-  from "../../../src/utils/mutations";
+  from "../../utils/mutations";
   import { Button } from "@mui/material";
+  import { useMutation } from "@apollo/client";
 
+ 
 
   function TestCalendar() {
     const [date, setDate] = useState(new Date());
+    const [addEvent] = useMutation(addCalendarEvent);
+    const [deleteEvent] = useMutation(deleteCalendarEvent);
+    const [deleteAllEvents] = useMutation(deleteAllCalendarEvents);
+    const [updateEvent] = useMutation(UpdateCalendarEvent);
   
     const handleDateChange = async (selectedDate) => {
       setDate(selectedDate);
     };
   
-    const handleAddEvent = async () => {
+    const handleAddEvent = async (selectedDate) => {
       try {
-        const response = await addCalendarEvent(date);
-        console.log("Event added:", response);
-        // Perform any other operations or display notifications/alerts based on the response
+        const response = await addEvent({
+          variables: {
+            id: String,
+            title: String,
+            description: String,
+            startDate: String,
+            endDate: String,
+            location: String,
+            allDay: Boolean,
+            userID: String,
+          },
+        }); 
+
       } catch (error) {
         console.error("Error adding event:", error);
         // Display an error notification or handle the error gracefully
       }
+      // Perform any other operations or display notifications/alerts based on the response
+      console.log("Event added:", response);
     };
-  
-    const handleDeleteEvent = async () => {
-      try {
-        const response = await deleteCalendarEvent(date);
-        console.log("Event deleted:", response);
-        // Perform any other operations or display notifications/alerts based on the response
-      } catch (error) {
+    const handledeleteEvent = async (selectedDate) => {
+      try{
+        const response = await deleteEvent({
+          variables: {
+            id: String,
+            title: String,
+            description: String,
+            startDate: String,
+            endDate: String,
+            location: String,
+            userID: String,
+          },
+
+        });
+      }
+      catch (error) {
         console.error("Error deleting event:", error);
         // Display an error notification or handle the error gracefully
       }
+      // Perform any other operations or display notifications/alerts based on the response
+      console.log("Event deleted:", response);
     };
   
-    const handleDeleteAllEvents = async () => {
+    const DeleteAllEvents = async (selectedDate) => {
       try {
-        const response = await deleteAllCalendarEvents();
-        console.log("All events deleted:", response);
-        // Perform any other operations or display notifications/alerts based on the response
+        const response = await deleteAllCalendarEvents({
+          variables: {
+            id: String,
+            title: String,
+            description: String,
+            startDate: String,
+            endDate: String,
+            location: String,
+            userID: String,
+          },
+        });
       } catch (error) {
         console.error("Error deleting all events:", error);
         // Display an error notification or handle the error gracefully
       }
+      // Perform any other operations or display notifications/alerts based on the response
+      console.log("All events deleted:", response);
     };
   
-    const handleUpdateEvent = async () => {
+    const handleUpdateEvent = async (selectedDate) => {
       try {
-        const response = await UpdateCalendarEvent(date);
-        console.log("Event updated:", response);
-        // Perform any other operations or display notifications/alerts based on the response
+        const response = await updateEvent({
+          variables: {
+             
+            userID: String,
+            startDate: String,
+            endDate: String,
+          },
+        });
       } catch (error) {
         console.error("Error updating event:", error);
         // Display an error notification or handle the error gracefully
       }
-    };
-  
+      // Perform any other operations or display notifications/alerts based on the response
+      console.log("Event updated:", response);
+    }
+
+    
     const renderSelectedDate = () => {
       if (Array.isArray(date)) {
         return (
