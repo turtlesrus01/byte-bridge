@@ -7,7 +7,7 @@ const initialState = {
 };
 
 // Login action type
-const SET_LOGIN_STATUS = 'SET_LOGIN_STATUS';
+export const SET_LOGIN_STATUS = 'SET_LOGIN_STATUS';
 
 //useReducer to initialize state
 const reducer = (state, action) => {

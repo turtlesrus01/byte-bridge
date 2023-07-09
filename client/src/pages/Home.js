@@ -1,32 +1,40 @@
 import React, { useContext } from "react";
 // Import the UserContext
-import { UserContext } from "../utils/UserContext"; 
+import { UserContext, SET_LOGIN_STATUS } from "../utils/UserContext"; 
 // Import the components
-import { CalendarEmail } from "./CalendarEmail";
+import CalendarEmail from "./CalendarEmail";
+import { Button, Typography, Box } from "@mui/material";
 
 const Home = () => {
   // Access the state from UserContext
-  const { state } = useContext(UserContext); 
+  const { state, dispatch } = useContext(UserContext); 
+
+  const handleLogin = () => {
+    // Dispatch action to set login status to true
+    dispatch({ type: SET_LOGIN_STATUS, payload: true }); 
+  };
 
   return (
-    <main>
-      <div className="flex-row justify-center">
-        <div
-          className="col-12 col-md-10 mb-3 p-3"
-          style={{ border: "1px dotted #1a1a1a" }}
-        >
-          <h2>HOMEPAGE</h2>
-        </div>
-        <div className="col-12 col-md-8 mb-3">
-          {state.isLoggedIn ? ( 
-            <CalendarEmail /> // Render the CalendarEmail component if logged in
-          ) : (
-            // Render the default content if not logged in
-            <div>Splashpage content</div>
-          )}
-        </div>
-      </div>
-    </main>
+    <Box display="flex" justifyContent="center">
+      <Box
+        className="col-12 col-md-10 mb-3 p-3"
+        sx={{ border: "1px dotted #1a1a1a" }}
+      >
+        <Typography variant="h2" component="h2">
+          HOMEPAGE
+        </Typography>
+        <Button variant="contained" onClick={handleLogin}>
+          Login
+        </Button>
+      </Box>
+      <Box className="col-12 col-md-8 mb-3">
+        {state.isLoggedIn ? (
+          <CalendarEmail />
+        ) : (
+          <Typography variant="body1">Default Content</Typography>
+        )}
+      </Box>
+    </Box>
   );
 };
 
