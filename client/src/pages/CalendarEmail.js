@@ -6,12 +6,13 @@ import TestCalendar from '../components/TestCalendar/TestCalendar';
 const CalendarEmail = () => {
   return (
     <Grid container spacing={2} sx={{ p: 2 }}>
-      <Grid item xs={12} sm={6}>
+      <Grid item xs={4} sm={3}>
         <Paper elevation={3} sx={{ p: 2 }}>
           <ContactForm />
         </Paper>
       </Grid>
-      <Grid item xs={12} sm={6}>
+      
+      <Grid item xs={12} sm={8}>
         <Paper elevation={3} sx={{ p: 2 }}>
           <TestCalendar />
         </Paper>
