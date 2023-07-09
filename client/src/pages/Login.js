@@ -1,17 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-import { LOGIN_USER } from "../utils/mutations";
-//MUI components
-import { Button, TextField, Grid, Snackbar, Modal, Box } from "@mui/material";
-import MuiAlert from "@mui/material/Alert"; 
 
+//MUI components
+import { Button, TextField, Grid, Snackbar, Modal, Box, Typography } from "@mui/material";
+import MuiAlert from "@mui/material/Alert";
+// Import utils
+import { LOGIN_USER } from "../utils/mutations";
+import { UserContext, SET_LOGIN_STATUS } from "../utils/UserContext";
 import Auth from "../utils/auth";
 
 const Login = (props) => {
   const [formState, setFormState] = useState({ email: "", password: "" });
   const [login, { error, data }] = useMutation(LOGIN_USER);
   const [modalOpen, setModalOpen] = useState(false);
+  // Context setup
+  const { dispatch } = useContext(UserContext);
 
   const handleModalOpen = () => {
     setModalOpen(true);
@@ -34,10 +38,12 @@ const Login = (props) => {
     console.log(formState);
     try {
       const { data } = await login({
-        variables: {...formState },
+        variables: { ...formState },
       });
       console.log("Received token:", data.login.token);
       Auth.login(data.login.token);
+      // Context update
+      dispatch({ type: SET_LOGIN_STATUS, payload: true });
     } catch (e) {
       console.error(e);
     }
@@ -52,23 +58,47 @@ const Login = (props) => {
     <main className="flex-row justify-center mb-4">
       <div className="col-12 col-lg-10">
         <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Login</h4>
+          <Box
+            className="card-header"
+            sx={{
+              backgroundColor: "dark",
+              color: "light",
+              padding: "2px",
+            }}
+          >
+            <Typography variant="h4">Login</Typography>
+          </Box>
           <div className="card-body">
             {data ? (
               <Snackbar open={true} autoHideDuration={3000}>
                 <MuiAlert severity="success">
-                  Success! You may now head{' '}
+                  Success! You may now head{" "}
                   <Link to="/">back to the homepage.</Link>
                 </MuiAlert>
               </Snackbar>
             ) : (
               <>
-                <Button variant="contained" color="primary" onClick={handleModalOpen}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleModalOpen}
+                >
                   Open Login Modal
                 </Button>
 
                 <Modal open={modalOpen} onClose={handleModalClose}>
-                  <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'background.paper', boxShadow: 24, p: 4, width: '300px' }}>
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      bgcolor: "background.paper",
+                      boxShadow: 24,
+                      p: 4,
+                      width: "300px",
+                    }}
+                  >
                     <form onSubmit={handleFormSubmit}>
                       <Grid container spacing={2}>
                         <Grid item xs={12}>
@@ -92,7 +122,12 @@ const Login = (props) => {
                           />
                         </Grid>
                       </Grid>
-                      <Button variant="contained" color="primary" type="submit" style={{ marginTop: '10px' }}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                        style={{ marginTop: "10px" }}
+                      >
                         Submit
                       </Button>
                     </form>
