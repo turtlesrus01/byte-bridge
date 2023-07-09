@@ -26,7 +26,7 @@ const ContactForm = () => {
     };
 
     emailjs
-      .send("service_icvic7f", "template_ocdv2j6", emailData.user_id, emailData)
+      .send(emailData)
       .then(
         function (response) {
           console.log("SUCCESS!", response.status, response.text);
