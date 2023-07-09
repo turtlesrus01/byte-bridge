@@ -17,6 +17,7 @@ import Profile from "./pages/Profile";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import TestCalendar from "./components/TestCalendar/TestCalendar";
+import CalendarEmail from "./pages/CalendarEmail";
 // import Calendar from "./pages/Calendar";
 
 // GraphQL endpoint
@@ -76,6 +77,10 @@ function App() {
               <Route 
                 path="/testcalendar"
                 element={<TestCalendar />}
+              />
+              <Route 
+                path="/calendaremail"
+                element={<CalendarEmail />}
               />
             </Routes>
           </div>

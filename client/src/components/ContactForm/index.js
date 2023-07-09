@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button, TextField } from '@mui/material';
-import { Form } from 'react-router-dom';
 
 const ContactForm = () => {
   const { register, handleSubmit, formState } = useForm();
@@ -11,7 +10,7 @@ const ContactForm = () => {
       const { user_name, user_email, subject, message } = data;
 
       const emailMessage =
-        'email — ' + user_email + '<br>' + 'Summary:' + message;
+        `email — ${user_email}<br>Summary: ${message}`;
 
       var emailData = {
         service_id: 'mine_is_gmail',
@@ -44,16 +43,16 @@ const ContactForm = () => {
     };
 
     // Register the submit handler
-    Form.addEventListener('submit', handleSubmit(onSubmit));
+    document.getElementById('contact-form').addEventListener('submit', handleSubmit(onSubmit));
 
     // Clean up the event listener
     return () => {
-      Form.removeEventListener('submit', handleSubmit(onSubmit));
+      document.getElementById('contact-form').removeEventListener('submit', handleSubmit(onSubmit));
     };
-  }, []);
+  });
 
   return (
-    <Form id="contact-form">
+    <form id="contact-form">
       <TextField
         {...register('user_name')}
         label="Name"
@@ -91,7 +90,7 @@ const ContactForm = () => {
       >
         Send Email
       </Button>
-    </Form>
+    </form>
   );
 };
 

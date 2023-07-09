@@ -24,7 +24,7 @@ export const ADD_USER = gql`
     }
   }
 `;
-const addCalendarEvent = gql`
+export const addCalendarEvent = gql`
 mutation AddCalendarEvent($id: ID!, $title: String!, $description: String!, $startDate: String!, $endDate: String!, $location: String!, $allDay: Boolean!, $userId: ID!) {
   addCalendarEvent(_id: $id, title: $title, description: $description, startDate: $startDate, endDate: $endDate, location: $location, allDay: $allDay, userID: $userId) {
     _id
