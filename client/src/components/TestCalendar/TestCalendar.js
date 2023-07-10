@@ -101,16 +101,16 @@ function TestCalendar() {
       </div>
       {renderSelectedDate()}
       <Box className="buttons-container" align="center">
-        <Button variant="contained" onClick={handleAddEvent}>
+        <Button variant="contained" onClick={handleAddEvent}  sx={{m:1}}>
           Add Event
         </Button>
-        <Button variant="contained" onClick={handleDeleteEvent}>
+        <Button variant="contained" onClick={handleDeleteEvent} sx={{m:1}}>
           Delete Event
         </Button>
-        <Button variant="contained" onClick={handleDeleteAllEvents}>
+        <Button variant="contained" onClick={handleDeleteAllEvents} sx={{m:1}}>
           Delete All Events
         </Button>
-        <Button variant="contained" onClick={handleUpdateEvent}>
+        <Button variant="contained" onClick={handleUpdateEvent} sx={{m:1}}>
           Update Event
         </Button>
         <Snackbar
