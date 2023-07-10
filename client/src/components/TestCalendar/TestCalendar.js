@@ -22,6 +22,7 @@ function TestCalendar() {
     setDate(selectedDate);
   };
 
+  // Add a new event
   const handleAddEvent = async () => {
     try {
       const response = await addEvent({
@@ -45,6 +46,7 @@ function TestCalendar() {
     }
   };
 
+  // Delete an event
   const handleDeleteEvent = async () => {
     try {
       const response = await deleteEvent({
@@ -62,6 +64,7 @@ function TestCalendar() {
     }
   };
 
+  // Delete all events
   const handleDeleteAllEvents = async () => {
     try {
       const response = await deleteAllEvents({
@@ -78,6 +81,7 @@ function TestCalendar() {
     }
   };
 
+  // Update an event
   const handleUpdateEvent = async () => {
     try {
       const response = await updateEvent({
