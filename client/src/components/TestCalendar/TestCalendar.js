@@ -1,74 +1,101 @@
 import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "../../../src/App.css";
-import { Typography, Box, Snackbar, Button } from "@mui/material";
+import { useMutation } from "@apollo/client";
 import {
   addCalendarEvent,
   deleteCalendarEvent,
   deleteAllCalendarEvents,
   UpdateCalendarEvent,
 } from "../../utils/mutations";
+import { Typography, Box, Snackbar, Button } from "@mui/material";
 
 function TestCalendar() {
-  const [date, setDate] = useState(new Date());
   const [error, setError] = useState(null);
+  const [date, setDate] = useState(new Date());
+  const [addEvent] = useMutation(addCalendarEvent);
+  const [deleteEvent] = useMutation(deleteCalendarEvent);
+  const [deleteAllEvents] = useMutation(deleteAllCalendarEvents);
+  const [updateEvent] = useMutation(UpdateCalendarEvent);
 
-  const handleDateChange = async (selectedDate) => {
+  const handleDateChange = (selectedDate) => {
     setDate(selectedDate);
   };
 
   const handleAddEvent = async () => {
     try {
-      const response = await addCalendarEvent(date);
+      const response = await addEvent({
+        variables: {
+          id: String,
+          title: String,
+          description: String,
+          startDate: date[0].toISOString(), 
+          endDate: date[1].toISOString(), 
+          location: String, 
+          allDay: Boolean, 
+          userID: String, 
+        },
+      });
+
       console.log("Event added:", response);
       // Perform any other operations or display notifications/alerts based on the response
-      setError(null);
     } catch (error) {
       console.error("Error adding event:", error);
       // Display an error notification or handle the error gracefully
-      setError("Error adding event. Please try again.");
     }
   };
 
   const handleDeleteEvent = async () => {
     try {
-      const response = await deleteCalendarEvent(date);
+      const response = await deleteEvent({
+        variables: {
+          id: String, 
+          userID: String, 
+        },
+      });
+
       console.log("Event deleted:", response);
       // Perform any other operations or display notifications/alerts based on the response
-      setError(null);
     } catch (error) {
       console.error("Error deleting event:", error);
       // Display an error notification or handle the error gracefully
-      setError("Error deleting event. Please try again.");
     }
   };
 
   const handleDeleteAllEvents = async () => {
     try {
-      const response = await deleteAllCalendarEvents();
+      const response = await deleteAllEvents({
+        variables: {
+          userID: String, 
+        },
+      });
+
       console.log("All events deleted:", response);
       // Perform any other operations or display notifications/alerts based on the response
-      setError(null);
     } catch (error) {
       console.error("Error deleting all events:", error);
       // Display an error notification or handle the error gracefully
-      setError("Error deleting events. Please try again.");
     }
   };
 
   const handleUpdateEvent = async () => {
     try {
-      const response = await UpdateCalendarEvent(date);
+      const response = await updateEvent({
+        variables: {
+          userID: String, 
+          startDate: date[0].toISOString(), 
+          endDate: date[1].toISOString(), 
+        },
+      });
+
       console.log("Event updated:", response);
       // Perform any other operations or display notifications/alerts based on the response
-      setError(null);
     } catch (error) {
       console.error("Error updating event:", error);
       // Display an error notification or handle the error gracefully
-      setError("Error updating event. Please try again.");
     }
   };
-
+  
   // Snackbar (front-end error messaging) handler
   const handleSnackbarClose = () => {
     setError(null);
