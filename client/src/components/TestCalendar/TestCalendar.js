@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "../../../src/App.css";
-import { Typography } from "@mui/material";
 import { useMutation } from "@apollo/client";
 import {
   addCalendarEvent,
@@ -9,9 +8,10 @@ import {
   deleteAllCalendarEvents,
   UpdateCalendarEvent,
 } from "../../utils/mutations";
-import { Button } from "@mui/material";
+import { Typography, Box, Snackbar, Button } from "@mui/material";
 
 function TestCalendar() {
+  const [error, setError] = useState(null);
   const [date, setDate] = useState(new Date());
   const [addEvent] = useMutation(addCalendarEvent);
   const [deleteEvent] = useMutation(deleteCalendarEvent);
@@ -95,6 +95,11 @@ function TestCalendar() {
       // Display an error notification or handle the error gracefully
     }
   };
+  
+  // Snackbar (front-end error messaging) handler
+  const handleSnackbarClose = () => {
+    setError(null);
+  };
 
   const renderSelectedDate = () => {
     if (Array.isArray(date)) {
@@ -115,31 +120,33 @@ function TestCalendar() {
 
   return (
     <div className="app">
-      <Typography variant="h4">
+      <Typography variant="h4" align="center">
         Book Your Appointment with Your Realtor
       </Typography>
-      <div className="calendar-container">
-        <Calendar
-          onChange={handleDateChange}
-          value={date}
-          selectRange={true}
-        />
+      <div className="calendar-container" align="center">
+        <Calendar onChange={handleDateChange} value={date} selectRange={true} />
       </div>
       {renderSelectedDate()}
-      <div className="buttons-container">
-        <Button variant="contained" onClick={handleAddEvent}>
+      <Box className="buttons-container" align="center">
+        <Button variant="contained" onClick={handleAddEvent}  sx={{m:1}}>
           Add Event
         </Button>
-        <Button variant="contained" onClick={handleDeleteEvent}>
+        <Button variant="contained" onClick={handleDeleteEvent} sx={{m:1}}>
           Delete Event
         </Button>
-        <Button variant="contained" onClick={handleDeleteAllEvents}>
+        <Button variant="contained" onClick={handleDeleteAllEvents} sx={{m:1}}>
           Delete All Events
         </Button>
-        <Button variant="contained" onClick={handleUpdateEvent}>
+        <Button variant="contained" onClick={handleUpdateEvent} sx={{m:1}}>
           Update Event
         </Button>
-      </div>
+        <Snackbar
+          open={error !== null}
+          autoHideDuration={6000}
+          onClose={handleSnackbarClose}
+          message={error}
+        />
+      </Box>
     </div>
   );
 }
