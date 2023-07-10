@@ -10,7 +10,7 @@ import {
 } from "../../utils/mutations";
 import { Typography, Box, Snackbar, Button } from "@mui/material";
 
-function TestCalendar() {
+function TestCalendar({userID}) {
   const [error, setError] = useState(null);
   const [date, setDate] = useState(new Date());
   const [addEvent] = useMutation(addCalendarEvent);
@@ -27,12 +27,12 @@ function TestCalendar() {
     try {
       const response = await addEvent({
         variables: {
-          id: String,
-          title: String,
-          description: String,
+          id: generateUniqueID(),
+          title: eventTitle,
+          description: eventDescription,
           startDate: date[0].toISOString(), 
           endDate: date[1].toISOString(), 
-          location: String, 
+          location: eventLocation, 
           allDay: Boolean, 
           userID: String, 
         },
