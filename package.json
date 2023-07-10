@@ -1,26 +1,43 @@
 {
-  "name": "byte-bridge",
+  "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "server/server.js",
+  "main": "server.js",
   "scripts": {
-    "start": "concurrently \"cd server && npm run start\" \"cd client && npm start\"",
+    "start": "concurrently \"node server.js\" \"cd client && npm start\"",
+    "watch": "nodemon",
+    "seed": "node config/seeds.js",
     "server": "node server --ignore client",
     "develop": "concurrently \"cd server && npm run start\" \"cd client && npm start\"",
-    "install": "cd server && npm i && cd ../client && npm i",
-    "seed": "cd server && npm run seed",
+    "install": "npm i cd client npm i",
     "build": "cd client && npm run build",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "keywords": [],
-  "author": "Kelvin E. & Stefan P.",
+  "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "concurrently": "^5.3.0"
+    "concurrently": "^8.2.0",
+    "eslint": "^8.43.0",
+    "nodemon": "^2.0.2",
+    "prettier": "^2.8.8"
   },
   "dependencies": {
+    "@apollo/server": "^4.7.5",
     "@emailjs/browser": "^3.11.0",
-    "dotenv": "^16.3.1"
+    "apollo-server-express": "^3.12.0",
+    "bcrypt": "^5.1.0",
+    "cd": "^0.3.3",
+    "client": "^0.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "googleapis": "^120.0.0",
+    "graphql": "^16.7.1",
+    "i": "^0.3.7",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.3.1",
+    "nodemailer": "^6.9.3",
+    "npm": "^9.8.0"
   }
 }
