@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { Button, TextField } from "@mui/material";
-import emailjs from "emailjs-com";
+import emailjs from "@emailjs/browser";
 
 const ContactForm = () => {
   const { register, handleSubmit, formState } = useForm();
+  const form = useRef();
   // Initialize emailjs
   emailjs.init("jBCPSpSdZeJElIxQz");
 
@@ -13,34 +14,39 @@ const ContactForm = () => {
 
     const emailMessage = `email — ${user_email}<br>Summary: ${message}`;
 
-    const emailData = {
-      service_id: "service_icvic7f",
-      template_id: "template_ocdv2j6", // Replace with your template ID
-      user_id: "jBCPSpSdZeJElIxQz", // Replace with your Public Key
-      template_params: {
-        from_name: user_name,
-        to_name: "Sucheta",
-        subject: subject,
-        message_html: emailMessage,
-      },
-    };
+    // const exampleEmailData = {
+    //   service_id: "service_icvic7f",
+    //   template_id: "template_ocdv2j6", // Replace with your template ID
+    //   user_id: "jBCPSpSdZeJElIxQz", // Replace with your Public Key
+    //   template_params: {
+    //     from_name: user_name,
+    //     to_name: "Sucheta",
+    //     subject: subject,
+    //     message_html: emailMessage,
+    //   },
+    // };
 
-    emailjs
-      .send(emailData)
-      .then(
-        function (response) {
-          console.log("SUCCESS!", response.status, response.text);
-          alert("Your mail is sent!");
-        },
-        function (error) {
-          console.log("FAILED...", error);
-          alert("Oops... There was an error sending the mail.");
-        }
-      );
+    emailjs.sendForm(
+      // Email service id
+      'service_icvic7f',
+      // Template id 
+      'template_ocdv2j6',
+      // Form data 
+      form.current,
+      // Public key
+      'jBCPSpSdZeJElIxQz')
+    .then(
+      (result) => {
+        console.log(result.text);
+      },
+      (error) => {
+        console.log(error.text);
+      }
+    );
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form ref={form} onSubmit={handleSubmit(onSubmit)}>
       <TextField
         {...register("user_name")}
         label="Name"

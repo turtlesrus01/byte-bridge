@@ -1,15 +1,13 @@
 const jwt = require("jsonwebtoken");
+require('dotenv').config();
+const jwtSecret = process.env.JWT_SECRET;
 
-const { jwtSecret } = require('../config/secret');
+//const { jwtSecret } = require('../config/secret');
 const expiration = "2h";
 
 module.exports = {
   authMiddleware: function ({ req }) {
-    let token = req.body.token || req.query.token || req.headers.authorization;
-
-    if (req.headers.authorization) {
-      token = token.split(" ").pop().trim();
-    }
+    let token = getTokenFromRequest(req);
 
     if (!token) {
       return req;
@@ -32,3 +30,19 @@ module.exports = {
     return jwt.sign({ data: payload }, jwtSecret, { expiresIn: expiration });
   },
 };
+
+function getTokenFromRequest(req) {
+  // Get token from header
+  let token = req.headers.authorization;
+
+  if (token) {
+    if (token.startsWith("Bearer ")) {
+      // Removes the "Bearer " prefix
+      token = token.slice(7); 
+    } else {
+      throw new Error("Invalid token format");
+    }
+  }
+
+  return token;
+}

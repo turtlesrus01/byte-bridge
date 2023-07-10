@@ -7,7 +7,7 @@ import {
   deleteCalendarEvent,
   deleteAllCalendarEvents,
   UpdateCalendarEvent,
-} from "../../../src/utils/mutations";
+} from "../../utils/mutations";
 
 function TestCalendar() {
   const [date, setDate] = useState(new Date());
