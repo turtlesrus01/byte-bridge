@@ -6,10 +6,14 @@ const Footer = () => {
     <Paper
       elevation={3}
       style={{ padding: 20 }}
-      sx={{ p: 2,
-        width: "100%",
+      sx={{
+        padding: 20,
         position: "fixed",
-        bottom: 0, }}
+        left: 0,
+        bottom: 0,
+        width: "100%",
+        zIndex: 9999,
+      }}
     >
       <Box sx={{ justifyContent: "center", display: "flex" }}>
         <Typography variant="body1" component="h2">
