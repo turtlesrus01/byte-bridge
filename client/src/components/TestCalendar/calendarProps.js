@@ -1,7 +1,7 @@
 import React from "react";
 import TestCalendar from "./TestCalendar";
 
-function calendarProps() {
+function CalendarProps() {
   // Define props for CRUD operations
   const userId = "user123";
   const eventId = "event456";
@@ -26,4 +26,4 @@ function calendarProps() {
   );
 }
 
-export default calendarProps;
+export default CalendarProps;
