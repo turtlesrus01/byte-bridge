@@ -1,10 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Paper, Typography, Button, AppBar, Toolbar } from "@mui/material";
+import { Link, useLocation } from "react-router-dom";
+import { Paper, Typography, Button, AppBar, Toolbar, Tab, Tabs,  } from "@mui/material";
 
 import Auth from "../../utils/auth";
 
 const Header = () => {
+  const location = useLocation();
+
   const logout = (event) => {
     event.preventDefault();
     Auth.logout();
@@ -25,10 +27,13 @@ const Header = () => {
             </div>
             <div>
               {Auth.loggedIn() ? (
-                <>
-                  <Link className="btn btn-lg btn-info m-2" to="/me">
-                    {Auth.getProfile().data.username}'s profile
-                  </Link>
+                <Tabs value={location.pathname}>
+                  <Tab
+                    label={`${Auth.getProfile().data.username}'s profile`}
+                    value="/me"
+                    component={Link}
+                    to="/me"
+                  />
                   <Button
                     variant="outlined"
                     className="btn btn-lg btn-light m-2"
@@ -36,20 +41,22 @@ const Header = () => {
                   >
                     Logout
                   </Button>
-                </>
+                </Tabs>
               ) : (
-                <>
-                  <Link
-                    variant="outlined"
-                    className="btn btn-lg btn-info m-2"
+                <Tabs value={location.pathname}>
+                  <Tab
+                    label="Login"
+                    value="/login"
+                    component={Link}
                     to="/login"
-                  >
-                    Login
-                  </Link>
-                  <Link className="btn btn-lg btn-light m-2" to="/signup">
-                    Signup
-                  </Link>
-                </>
+                  />
+                  <Tab
+                    label="Signup"
+                    value="/signup"
+                    component={Link}
+                    to="/signup"
+                  />
+                </Tabs>
               )}
             </div>
           </div>
