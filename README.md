@@ -2,7 +2,7 @@
 
 # Realtor Calendar and Email Scheduler 
 
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Table of Contents
 
@@ -60,8 +60,6 @@ npm run develop
 
 ## Questions
 
-[My portfolio](https://csabbah.github.io/Carlos-Sabbah-portfolio/)
-
 To view my Stehpan's repositories:
 [Github](https://github.com/turtlesrus01) to view Kelvin's repositories [Github](https://github.com/That-Dude13)
 
@@ -69,4 +67,3 @@ If you have questions about this application or general inquiry, please reach ou
 
 This project is covered under the MIT License.
 
-<img width="1640" alt="Previe" src="https://user-images.githubusercontent.com/91699101/178625203-986006e4-2c55-4518-963d-64d21ca73488.png">
