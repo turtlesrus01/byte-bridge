@@ -18,7 +18,7 @@ const Footer = () => {
             href="https://github.com/That-Dude13"
             aria-label="GitHub profile of Kelvin Easily"
           >
-            Kelvin Easily
+            Kelvin Easiley
           </Link>{" "}
           and{" "}
           <Link
