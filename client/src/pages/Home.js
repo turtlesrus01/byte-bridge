@@ -32,7 +32,10 @@ const Home = () => {
         </Box>
       ) : (
         <>
-          <Box className="col-12 col-md-10 mb-3 p-3" sx={{ border: "1px dotted #1a1a1a" }}>
+          <Box
+            className="col-12 col-md-10 mb-3 p-3"
+            sx={{ border: "1px dotted #1a1a1a" }}
+          >
             <Typography variant="h3" component="h3">
               HOMEPAGE
             </Typography>

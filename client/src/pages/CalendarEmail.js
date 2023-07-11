@@ -1,7 +1,7 @@
-import React from 'react';
-import { Grid, Paper } from '@mui/material';
-import ContactForm from '../components/ContactForm';
-import CalendarProps from '../components/TestCalendar/CalendarProps';
+import React from "react";
+import { Grid, Paper } from "@mui/material";
+import ContactForm from "../components/ContactForm";
+import CalendarProps from "../components/CalendarProps";
 
 const CalendarEmail = () => {
   return (
@@ -11,10 +11,10 @@ const CalendarEmail = () => {
           <ContactForm />
         </Paper>
       </Grid>
-      
+
       <Grid item xs={12} sm={8}>
         <Paper elevation={3} sx={{ p: 2 }}>
-          <CalendarProps/>
+          <CalendarProps />
         </Paper>
       </Grid>
     </Grid>
