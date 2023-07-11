@@ -13,6 +13,8 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: authMiddleware,
+  persistedQueries: false,
+  cache: "bounded",
 });
 
 // Heroku server code
