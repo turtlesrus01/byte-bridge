@@ -10,7 +10,16 @@ import {
 } from "../../utils/mutations";
 import { Typography, Box, Snackbar, Button } from "@mui/material";
 
-function TestCalendar() {
+function TestCalendar({
+  userId,
+  eventId,
+  eventTitle,
+  eventDescription,
+  eventStartDate,
+  eventEndDate,
+  eventLocation,
+  eventAllDay,
+}) {
   const [error, setError] = useState(null);
   const [date, setDate] = useState(new Date());
   const [addEvent] = useMutation(addCalendarEvent);
@@ -27,14 +36,14 @@ function TestCalendar() {
     try {
       const response = await addEvent({
         variables: {
-          id: String,
-          title: String,
-          description: String,
-          startDate: date[0].toISOString(), 
-          endDate: date[1].toISOString(), 
-          location: String, 
-          allDay: Boolean, 
-          userID: String, 
+          id: eventId,
+          title: eventTitle,
+          description: eventDescription,
+          startDate: eventStartDate.toISOString(),
+          endDate: eventEndDate.toISOString(),
+          location: eventLocation,
+          allDay: eventAllDay,
+          userID: userId,
         },
       });
 
@@ -51,8 +60,8 @@ function TestCalendar() {
     try {
       const response = await deleteEvent({
         variables: {
-          id: String, 
-          userID: String, 
+          id: eventId,
+          userID: userId,
         },
       });
 
@@ -69,7 +78,7 @@ function TestCalendar() {
     try {
       const response = await deleteAllEvents({
         variables: {
-          userID: String, 
+          userID: userId,
         },
       });
 
@@ -86,9 +95,9 @@ function TestCalendar() {
     try {
       const response = await updateEvent({
         variables: {
-          userID: String, 
-          startDate: date[0].toISOString(), 
-          endDate: date[1].toISOString(), 
+          userID: userId,
+          startDate: eventStartDate.toISOString(),
+          endDate: eventEndDate.toISOString(),
         },
       });
 
@@ -99,7 +108,7 @@ function TestCalendar() {
       // Display an error notification or handle the error gracefully
     }
   };
-  
+
   // Snackbar (front-end error messaging) handler
   const handleSnackbarClose = () => {
     setError(null);
@@ -132,20 +141,24 @@ function TestCalendar() {
       </div>
       {renderSelectedDate()}
       <Box className="buttons-container" align="center">
-        <Button variant="contained" onClick={handleAddEvent}  sx={{m:1}}>
+        <Button variant="contained" onClick={handleAddEvent} sx={{ m: 1 }}>
           Add Event
         </Button>
-        <Button variant="contained" onClick={handleDeleteEvent} sx={{m:1}}>
+        <Button variant="contained" onClick={handleDeleteEvent} sx={{ m: 1 }}>
           Delete Event
         </Button>
-        <Button variant="contained" onClick={handleDeleteAllEvents} sx={{m:1}}>
+        <Button
+          variant="contained"
+          onClick={handleDeleteAllEvents}
+          sx={{ m: 1 }}
+        >
           Delete All Events
         </Button>
-        <Button variant="contained" onClick={handleUpdateEvent} sx={{m:1}}>
+        <Button variant="contained" onClick={handleUpdateEvent} sx={{ m: 1 }}>
           Update Event
         </Button>
         <Snackbar
-          open={error !== null}
+         open={error !== null}
           autoHideDuration={6000}
           onClose={handleSnackbarClose}
           message={error}
