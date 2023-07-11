@@ -17,28 +17,19 @@ const server = new ApolloServer({
   cache: "bounded",
 });
 
-// Heroku server code
-if (
-  process.env.NODE_ENV === `production` ||
-  process.env.NODE_ENV === `staging`
-) {
-  app.use(express.static(`client/build`));
-  app.get(`*`, (req, res) => {
-    res.sendFile(path.join(__dirname + `/client/build/index.html`));
-  });
+// Production server code
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')));
 }
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
 
 //Express middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// if (process.env.NODE_ENV === "production") {
-//   app.use(express.static(path.join(__dirname, "../client/build")));
-// }
-
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/build/index.html"));
-});
 //Apollo server middleware
 const startApolloServer = async () => {
   await server.start();
