@@ -4,8 +4,14 @@ import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../utils/mutations";
 //MUI components
-import { Button, TextField, Grid, Snackbar } from "@mui/material";
-import MuiAlert from "@mui/material/Alert";
+import { Button,
+  TextField,
+  Grid,
+  Snackbar,
+  Container,
+  Box,
+  Alert,
+  Typography } from "@mui/material";
 
 import Auth from "../utils/auth";
 
@@ -42,72 +48,67 @@ const Signup = () => {
   };
 
   return (
-    <main className="flex-row justify-center mb-4">
-      <div className="col-12 col-lg-10">
-        <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Sign Up</h4>
-          <div className="card-body">
-            {data ? (
-              <Snackbar open={true} autoHideDuration={3000}>
-                <MuiAlert severity="success">
-                  Success! You may now head{" "}
-                  <Link to="/">back to the homepage.</Link>
-                </MuiAlert>
-              </Snackbar>
-            ) : (
-              <form onSubmit={handleFormSubmit}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      label="Your username"
-                      name="username"
-                      type="text"
-                      value={formState.username}
-                      onChange={handleChange}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      label="Your email"
-                      name="email"
-                      type="email"
-                      value={formState.email}
-                      onChange={handleChange}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      label="******"
-                      name="password"
-                      type="password"
-                      value={formState.password}
-                      onChange={handleChange}
-                    />
-                  </Grid>
-                </Grid>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  style={{ cursor: "pointer" }}
-                  type="submit"
-                >
-                  Submit
-                </Button>
-              </form>
-            )}
-
-            {error && (
-              <div className="my-3 p-3 bg-danger text-white">
-                {error.message}
-              </div>
-            )}
-          </div>
+    <Container maxWidth="sm">
+      <Box display="flex" justifyContent="center" mt={4} mb={4}>
+        <div>
+          <Typography variant="h6" component="h4">Sign Up</Typography>
+          <Snackbar open={Boolean(data)} autoHideDuration={3000}>
+            <Alert severity="success">
+              Success! You may now head{" "}
+              <Link to="/">back to the homepage.</Link>
+            </Alert>
+          </Snackbar>
+          <form onSubmit={handleFormSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Your username"
+                  name="username"
+                  type="text"
+                  value={formState.username}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Your email"
+                  name="email"
+                  type="email"
+                  value={formState.email}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="******"
+                  name="password"
+                  type="password"
+                  value={formState.password}
+                  onChange={handleChange}
+                />
+              </Grid>
+            </Grid>
+            <Button
+              variant="contained"
+              color="primary"
+              style={{ cursor: "pointer" }}
+              type="submit"
+              sx={{ my: 1}}
+            >
+              Submit
+            </Button>
+          </form>
+          {error && (
+            <div className="my-3 p-3 bg-danger text-white">
+              {error.message}
+            </div>
+          )}
         </div>
-      </div>
-    </main>
+      </Box>
+    </Container>
   );
 };
 
