@@ -1,6 +1,13 @@
-import React from 'react';
-import { Grid, TextField, Typography, List, ListItem, ListItemText } from "@mui/material";
-import { useQuery, gql } from '@apollo/client';
+import React from "react";
+import {
+  Grid,
+  TextField,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
+import { useQuery, gql } from "@apollo/client";
 
 // Query to the database
 const GET_CALENDAR_EVENTS = gql`
@@ -34,7 +41,10 @@ const Profile = () => {
         <List>
           {events.map((event) => (
             <ListItem key={event._id}>
-              <ListItemText primary={event.title} secondary={event.description} />
+              <ListItemText
+                primary={event.title}
+                secondary={event.description}
+              />
               <ListItemText primary={`Start Date: ${event.startDate}`} />
               <ListItemText primary={`End Date: ${event.endDate}`} />
               <ListItemText primary={`Location: ${event.location}`} />

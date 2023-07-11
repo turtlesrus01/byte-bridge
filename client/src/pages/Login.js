@@ -3,7 +3,15 @@ import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 
 //MUI components
-import { Button, TextField, Grid, Snackbar, Modal, Box, Typography } from "@mui/material";
+import {
+  Button,
+  TextField,
+  Grid,
+  Snackbar,
+  Modal,
+  Box,
+  Typography,
+} from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 // Import utils
 import { LOGIN_USER } from "../utils/mutations";
