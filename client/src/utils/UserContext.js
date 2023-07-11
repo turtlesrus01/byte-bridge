@@ -27,10 +27,10 @@ export const UserContext = createContext(initialState);
 
 //Create the provider component
 export const UserProvider = ({ children }) => {
-  const [state, userDispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
-    <UserContext.Provider value={{ state, userDispatch }}>
+    <UserContext.Provider value={{ state, dispatch }}>
       {children}
     </UserContext.Provider>
   );
