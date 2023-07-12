@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 
 //MUI components
@@ -10,7 +10,6 @@ import {
   Snackbar,
   Modal,
   Box,
-  Typography,
 } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 // Import utils
@@ -19,13 +18,15 @@ import { UserContext, SET_LOGIN_STATUS } from "../utils/UserContext";
 import Auth from "../utils/auth";
 import CalendarEmail from "./CalendarEmail";
 
-
 const Login = (props) => {
   const [formState, setFormState] = useState({ email: "", password: "" });
   const [login, { error, data }] = useMutation(LOGIN_USER);
   const [modalOpen, setModalOpen] = useState(false);
   // Context setup
   const { dispatch } = useContext(UserContext);
+  const navigate = useNavigate();
+  //Notification state
+  const [showSuccessSnackbar, setShowSuccessSnackbar] = useState(false);
 
   const handleModalOpen = () => {
     setModalOpen(true);
@@ -34,6 +35,7 @@ const Login = (props) => {
   const handleModalClose = () => {
     setModalOpen(false);
   };
+
   // State change based on form input
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -42,6 +44,7 @@ const Login = (props) => {
       [name]: value,
     });
   };
+
   // form submit handler
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -54,6 +57,10 @@ const Login = (props) => {
       Auth.login(data.login.token);
       // Context update
       dispatch({ type: SET_LOGIN_STATUS, payload: true });
+      // Show success snackbar
+      setShowSuccessSnackbar(true); 
+      // Navigate to the homepage
+      navigate("/");
     } catch (e) {
       console.error(e);
     }
@@ -63,6 +70,11 @@ const Login = (props) => {
       password: "",
     });
   };
+
+  if (data) {
+    // Return null until the navigation is complete
+    return null;
+  }
 
   return (
     <main className="flex-row justify-center mb-4">
@@ -75,81 +87,78 @@ const Login = (props) => {
               color: "light",
               padding: "2px",
             }}
-          
           ></Box>
-            
-         
+
           <div className="card-body">
-            {data ? (
+            <>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleModalOpen}
+              >
+                Click Here to Login
+              </Button>
+
+              <Modal open={modalOpen} onClose={handleModalClose}>
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    bgcolor: "background.paper",
+                    boxShadow: 24,
+                    p: 4,
+                    width: "300px",
+                  }}
+                >
+                  <form onSubmit={handleFormSubmit}>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12}>
+                        <TextField
+                          fullWidth
+                          label="Your email"
+                          name="email"
+                          type="email"
+                          value={formState.email}
+                          onChange={handleChange}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          fullWidth
+                          label="******"
+                          name="password"
+                          type="password"
+                          value={formState.password}
+                          onChange={handleChange}
+                        />
+                      </Grid>
+                    </Grid>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      type="submit"
+                      style={{ marginTop: "10px" }}
+                    >
+                      Submit
+                    </Button>
+                  </form>
+                  {error && (
+                    <div className="my-3 p-3 bg-danger text-white">
+                      {error.message}
+                    </div>
+                  )}
+                </Box>
+              </Modal>
+            </>
+            {/* Success Snackbar */}
+            {showSuccessSnackbar && (
               <Snackbar open={true} autoHideDuration={3000}>
                 <MuiAlert severity="success">
-                  Success! You may now head{" "}
-                  <Link to="./CalendarEmail">back to the homepage.</Link>
+                  Success! You are now logged in.
                 </MuiAlert>
               </Snackbar>
-            ) : (
-              <>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleModalOpen}
-                >
-                 Click Here to Login
-                </Button>
-                
-                <Modal open={modalOpen} onClose={handleModalClose}>
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      top: "50%",
-                      left: "50%",
-                      transform: "translate(-50%, -50%)",
-                      bgcolor: "background.paper",
-                      boxShadow: 24,
-                      p: 4,
-                      width: "300px",
-                    }}
-                  >
-                    <form onSubmit={handleFormSubmit}>
-                      <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                          <TextField
-                            fullWidth
-                            label="Your email"
-                            name="email"
-                            type="email"
-                            value={formState.email}
-                            onChange={handleChange}
-                          />
-                        </Grid>
-                        <Grid item xs={12}>
-                          <TextField
-                            fullWidth
-                            label="******"
-                            name="password"
-                            type="password"
-                            value={formState.password}
-                            onChange={handleChange}
-                          />
-                        </Grid>
-                      </Grid>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        type="submit"
-                        style={{ marginTop: "10px" }}
-                      >
-                        Submit
-                      </Button>
-                    </form>
-                    {error && (
-                      <div className="my-3 p-3 bg-danger text-white">
-                        {error.message}
-                      </div>
-                    )}
-                  </Box>
-                </Modal>
-              </>
             )}
           </div>
         </div>

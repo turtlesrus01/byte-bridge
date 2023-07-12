@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Paper, Typography, Button, AppBar, Toolbar, Tab, Tabs,  } from "@mui/material";
+import { Paper, Typography, Button, AppBar, Toolbar, Tab, Tabs  } from "@mui/material";
 
 import Auth from "../../utils/auth";
 
