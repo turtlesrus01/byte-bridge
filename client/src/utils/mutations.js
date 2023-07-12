@@ -29,64 +29,49 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_CALENDAR_EVENT = gql`
-  mutation AddCalendarEvent(
-    $id: ID!
-    $title: String!
-    $description: String!
-    $startDate: String!
-    $endDate: String!
-    $location: String!
-    $allDay: Boolean!
-    $userId: ID!
-  ) {
-    addCalendarEvent(
-      _id: $id
-      title: $title
-      description: $description
-      startDate: $startDate
-      endDate: $endDate
-      location: $location
-      allDay: $allDay
-      userID: $userId
-    ) {
-      _id
-      title
-      description
-      startDate
-      endDate
-      location
-      allDay
-      userID
-    }
+mutation AddCalendarEvent($input: AddCalendarEventInput!) {
+  addCalendarEvent(input: $input) {
+    _id
+    title
+    description
+    startDate
+    endDate
+    location
+    allDay
+    userID
   }
+}
 `;
 
 export const DELETE_CALENDAR_EVENT = gql`
-  mutation DeleteCalendarEvent($eventId: ID!) {
-    deleteCalendarEvent(eventID: $eventId) {
-      _id
-      title
-      description
-      startDate
-      endDate
-      location
-      userID
-    }
+mutation DeleteCalendarEvent($deleteCalendarEventId: ID!) {
+  deleteCalendarEvent(id: $deleteCalendarEventId) {
+    _id
+    title
+    description
+    startDate
+    endDate
+    location
+    allDay
+    userID
   }
-`;
+}
+  `;
+
 
 export const DELETE_ALL_CALENDAR_EVENTS = gql`
-  mutation DeleteAllCalendarEvents {
-    deleteAllCalendarEvents {
-      _id
-      title
-      description
-      startDate
-      endDate
-      location
-      userID
-    }
+mutation Mutation($deleteCalendarEventId: ID!) {
+  deleteCalendarEvent(id: $deleteCalendarEventId) {
+    _id
+    title
+    description
+    startDate
+    endDate
+    location
+    userID
+    allDay
   }
+}
 `;
 
 export const DELETE_USER = gql`
@@ -112,12 +97,16 @@ export const DELETE_ALL_USERS = gql`
 `;
 
 export const UPDATE_CALENDAR_EVENT = gql`
-  mutation UpdateCalendarEvent($userId: ID!, $startDate: String!, $endDate: String!, $location: String!) {
-    updateCalendarEvent(UserID: $userId, startDate: $startDate, endDate: $endDate, location: $location) {
-      userID
+  mmutation UpdateCalendarEvent($input: UpdateCalendarEventInput!) {
+    updateCalendarEvent(input: $input) {
+      _id
+      title
+      description
       startDate
       endDate
       location
+      allDay
+      userID
     }
   }
 `;
