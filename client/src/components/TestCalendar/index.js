@@ -155,23 +155,7 @@ function TestCalendar({
         <Calendar onChange={handleDateChange} value={date} selectRange={true} />
       </div>
       {renderSelectedDate()}
-      <Box className="buttons-container" align="center">
-        <Button variant="contained" onClick={handleAddCalendarEvent} sx={{ m: 1 }}>
-          Add Event
-        </Button>
-        <Button variant="contained" onClick={handleDeleteCalendarEvent} sx={{ m: 1 }}>
-          Delete Event
-        </Button>
-        <Button
-          variant="contained"
-          onClick={handleDeleteAllCalendarEvents}
-          sx={{ m: 1 }}
-        >
-          Delete All Events
-        </Button>
-        <Button variant="contained" onClick={handleUpdateCalendarEvent} sx={{ m: 1 }}>
-          Update Event
-        </Button>
+      <Box sx={{ mt: 3 }}>
         <Snackbar
           open={error !== null}
           autoHideDuration={6000}

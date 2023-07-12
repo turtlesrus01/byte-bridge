@@ -2,13 +2,17 @@ const {Schema, model} = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const CalendarEventSchema = new Schema({
-    title: {type: String, required: true},
-    description: {type: String, required: true},
-    startDate: {type: Date, default: Date.now, required: true},
-    endDate: {type: Date, default: Date.now, required: true},
-    location: {type: String, required: true},
-    userID: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-});
+    userId: { type: String, required: true },
+    eventId: { type: String, required: true },
+    eventTitle: { type: String, required: true },
+    eventDescription: { type: String, required: true },
+    eventStartDate: { type: Date, required: true },
+    eventEndDate: { type: Date, required: true },
+    eventLocation: { type: String, required: true },
+    eventAllDay: { type: Boolean, required: true },
+  });
+
+
 
 CalendarEventSchema.pre('save', async function (next) {
     if (this.isNew ||!this.isModified('password')) {

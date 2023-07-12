@@ -21,10 +21,40 @@ function CalendarPage() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const API_URL = "http://localhost:3001"
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Perform any necessary validation or API requests here
-    console.log(formData);
+    try {
+      // Perform API request to create instance in the database
+      const response = await fetch( `${API_URL}/CalendarPage`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      // Handle the response from the API
+      if (response.ok) {
+        console.log("Instance created successfully");
+        // Reset the form data
+        setFormData({
+          userId: "",
+          eventId: "",
+          eventTitle: "",
+          eventDescription: "",
+          eventStartDate: "",
+          eventEndDate: "",
+          eventLocation: "",
+          eventAllDay: false,
+        });
+      } else {
+        console.error("Failed to create instance");
+      }
+    } catch (error) {
+      console.error("Error creating instance", error);
+    }
   };
 
   return (
@@ -61,7 +91,6 @@ function CalendarPage() {
           />
           <TextField
             name="eventStartDate"
-            label="Event Start Date"
             type="datetime-local"
             value={formData.eventStartDate}
             onChange={handleInputChange}
@@ -69,7 +98,6 @@ function CalendarPage() {
           />
           <TextField
             name="eventEndDate"
-            label="Event End Date"
             type="datetime-local"
             value={formData.eventEndDate}
             onChange={handleInputChange}
