@@ -33,23 +33,26 @@ const Profile = () => {
 
   return (
     <div>
-      <Typography variant="h1">Profile</Typography>
+      <Typography variant="h3">Profile</Typography>
       <Grid container>
-        <TextField>Hello</TextField>
-
-        {/* Display the list of events */}
         <List>
-          {events.map((event) => (
-            <ListItem key={event._id}>
-              <ListItemText
-                primary={event.title}
-                secondary={event.description}
-              />
-              <ListItemText primary={`Start Date: ${event.startDate}`} />
-              <ListItemText primary={`End Date: ${event.endDate}`} />
-              <ListItemText primary={`Location: ${event.location}`} />
+          {events.length === 0 ? (
+            <ListItem>
+              <ListItemText primary="No events found." />
             </ListItem>
-          ))}
+          ) : (
+            events.map((event) => (
+              <ListItem key={event._id}>
+                <ListItemText
+                  primary={event.title}
+                  secondary={event.description}
+                />
+                <ListItemText primary={`Start Date: ${event.startDate}`} />
+                <ListItemText primary={`End Date: ${event.endDate}`} />
+                <ListItemText primary={`Location: ${event.location}`} />
+              </ListItem>
+            ))
+          )}
         </List>
       </Grid>
     </div>
