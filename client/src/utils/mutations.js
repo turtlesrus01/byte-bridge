@@ -97,7 +97,7 @@ export const DELETE_ALL_USERS = gql`
 `;
 
 export const UPDATE_CALENDAR_EVENT = gql`
-  mmutation UpdateCalendarEvent($input: UpdateCalendarEventInput!) {
+  mutation UpdateCalendarEvent($input: UpdateCalendarEventInput!) {
     updateCalendarEvent(input: $input) {
       _id
       title

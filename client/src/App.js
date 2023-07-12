@@ -20,6 +20,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import CalendarProps from "./components/CalendarProps";
 import CalendarEmail from "./pages/CalendarEmail";
+import CalendarForm from "./components/CalendarForm";
 // import Calendar from "./pages/Calendar";
 
 // GraphQL endpoint
@@ -64,6 +65,7 @@ function App() {
                 <Route path="/profiles/:username" element={<Profile />} />
                 <Route path="/calendarprops" element={<CalendarProps />} />
                 <Route path="/calendaremail" element={<CalendarEmail />} />
+                <Route path="/calendarform" element={<CalendarForm />} />
               </Routes>
             </div>
             <Footer />
