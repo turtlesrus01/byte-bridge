@@ -6,8 +6,6 @@ import {
   Button,
   AppBar,
   Toolbar,
-  Tab,
-  Tabs,
 } from "@mui/material";
 
 import Auth from "../../utils/auth";

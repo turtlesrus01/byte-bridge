@@ -67,3 +67,6 @@ If you have questions about this application or general inquiry, please reach ou
 
 This project is covered under the MIT License.
 
+## Credits
+<a href="https://www.flaticon.com/free-icons/calendar" title="calendar icons">Calendar icons created by Freepik - Flaticon</a>
+
