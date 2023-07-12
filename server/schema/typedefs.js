@@ -8,6 +8,13 @@ type User {
   password: String
 }
 
+type User {
+  _id: ID
+  username: String
+  email: String
+  password: String
+}
+
 type Auth {
   token: ID!
   user: User
@@ -27,18 +34,22 @@ type CalendarEvent {
 type Query {
   users: [User]
   user(username: String!): User
-  calendarEvent(_id: ID!): User
-  calendarEvents: [User]
-  getCalendarEvent(eventID: ID!): CalendarEvent!
-  getUser(username: String!): User!
-  getUsers: [User]!
+  calendarEvent(id: ID!): CalendarEvent
+  calendarEvents: [CalendarEvent]
 }
 
 type Mutation {
   addUser(username: String!, email: String!, password: String!): Auth!
   login(email: String!, password: String!): Auth!
-  addCalendarEvent(
-    _id: ID!
+  addCalendarEvent(input: AddCalendarEventInput!): CalendarEvent!
+  updateCalendarEvent(input: UpdateCalendarEventInput!): CalendarEvent!
+  deleteCalendarEvent(id: ID!): CalendarEvent!
+  deleteAllCalendarEvents: Boolean!
+  deleteUser(username: String!): User!
+  deleteAllUsers: Boolean!
+}
+
+input AddCalendarEventInput {
   title: String!
   description: String!
   startDate: String!
@@ -46,17 +57,13 @@ type Mutation {
   location: String!
   allDay: Boolean!
   userID: ID!
-  ): CalendarEvent!
-  
-  updateCalendarEvent(
-    UserID: ID!
-    startDate: String!
-    endDate: String!
-    location: String!): CalendarEvent!
-  deleteCalendarEvent(eventID: ID!): CalendarEvent!
-  deleteAllCalendarEvents: CalendarEvent!
-  deleteUser(username: String!): User!
-  deleteAllUsers: [User]!
+}
+
+input UpdateCalendarEventInput {
+  id: ID!
+  startDate: String
+  endDate: String
+  location: String
 }
 `;
 

@@ -1,11 +1,7 @@
-const {
-  AuthenticationError,
-  UserInputError,
-} = require("apollo-server-express");
-const { User } = require("../models");
+const { AuthenticationError, UserInputError } = require("apollo-server-express");
+const { User, CalendarEvent } = require("../models");
 const { signToken } = require("../utils/auth");
 
-// resolvers query
 const resolvers = {
   Query: {
     users: async () => {
@@ -14,110 +10,70 @@ const resolvers = {
     user: async (parent, { username }) => {
       return User.findOne({ username });
     },
-    calendarEvent: async (parent, { _id }) => {
-      return User.findById({ _id });
+    calendarEvent: async (parent, { id }) => {
+      return CalendarEvent.findById(id);
     },
-    calendarEvents: async (parent, args, context) => {
-      if (context.user) {
-        return User.find();
-      }
-      throw new AuthenticationError("You need to be logged in!");
+    calendarEvents: async () => {
+      return CalendarEvent.find();
     },
   },
 
   Mutation: {
     addUser: async (parent, { username, email, password }) => {
-      console.log("Received variables:", username, email, password);
       try {
         const user = await User.create({ username, email, password });
         const token = signToken(user);
         return { token, user };
-      } catch ({ name, code }) {
-        // Handle specific error cases
-        if (name === "ValidationError") {
-          // Handle validation errors
-          throw new UserInputError("Invalid input", {
-            invalidArgs: code.errors,
-          });
-        } else if (name === "MongoError" && code === 11000) {
-          // Handle duplicate key errors (e.g., unique email constraint)
+      } catch (error) {
+        if (error.name === "ValidationError") {
+          throw new UserInputError("Invalid input", { invalidArgs: error.errors });
+        } else if (error.name === "MongoError" && error.code === 11000) {
           throw new UserInputError("User with this email already exists");
-        } else {
-          // Handle generic or unexpected errors
-          throw new AuthenticationError("Failed to add user");
         }
+        throw new UserInputError("Failed to add user");
       }
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
-      if (!user) {
-        // User input error
+      if (!user || !(await user.isCorrectPassword(password))) {
         throw new UserInputError("Invalid email or password");
       }
-      const correctPw = await user.isCorrectPassword(password);
-    
-      if (!correctPw) {
-        // User input error
-        throw new UserInputError("Invalid email or password");
-      }
-    
       const token = signToken(user);
-      console.log("Generated token:", token);
-      // This returns a user object with a token 
-      return { token, user }; 
-    
-    },    
-    addCalendarEvent: async (parent, args, context) => {
-      if (context.user) {
-        return User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { calendarEvents: args } },
-          { new: true }
-        );
-      }
-      throw new AuthenticationError("You need to be logged in!");
+      return { token, user };
     },
-    updateCalendarEvent: async (parent, args, context) => {
-      if (context.user) {
-        return User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $set: { calendarEvents: args } },
-          { new: true }
-        );
-      }
-      throw new AuthenticationError("You need to be logged in!");
+    addCalendarEvent: async (parent, { input }) => {
+      const calendarEvent = await CalendarEvent.create(input);
+      return calendarEvent;
     },
-    deleteCalendarEvent: async (parent, args, context) => {
-      if (context.user) {
-        return User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { calendarEvents: { _id: args._id } } },
-          { new: true }
-        );
+    updateCalendarEvent: async (parent, { input }) => {
+      const { id, ...updates } = input;
+      const updatedEvent = await CalendarEvent.findByIdAndUpdate(id, updates, { new: true });
+      if (!updatedEvent) {
+        throw new UserInputError("Calendar event not found");
       }
-      throw new AuthenticationError("You need to be logged in!");
+      return updatedEvent;
     },
-    deleteAllCalendarEvents: async (parent, args, context) => {
-      if (context.user) {
-        return User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { calendarEvents: {} } },
-          { new: true }
-        );
+    deleteCalendarEvent: async (parent, { id }) => {
+      const deletedEvent = await CalendarEvent.findByIdAndDelete(id);
+      if (!deletedEvent) {
+        throw new UserInputError("Calendar event not found");
       }
-      throw new AuthenticationError("You need to be logged in!");
+      return deletedEvent;
     },
-    deleteUser: async (parent, args, context) => {
-      if (context.user) {
-        return User.findOneAndDelete({ _id: context.user._id });
-      }
-      throw new AuthenticationError("You need to be logged in!");
+    deleteAllCalendarEvents: async () => {
+      await CalendarEvent.deleteMany({});
+      return true;
     },
-    deleteAllUsers: async (parent, args, context) => {
-      if (context.user) {
-        return User.deleteMany({});
+    deleteUser: async (parent, { username }) => {
+      const deletedUser = await User.findOneAndDelete({ username });
+      if (!deletedUser) {
+        throw new UserInputError("User not found");
       }
-      throw new AuthenticationError("You need to be logged in!");
+      return deletedUser;
+    },
+    deleteAllUsers: async () => {
+      await User.deleteMany({});
+      return true;
     },
   },
 };
