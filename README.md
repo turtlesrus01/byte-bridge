@@ -1,8 +1,8 @@
 # Byte-Bridge
 
-# Realtor Calendar and Email Scheduler 
+## Realtor Calendar and Email Scheduler 
 
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Table of Contents
 
@@ -35,7 +35,7 @@ npm run develop
 ```
 ## Links
 
-[Link to live application](https://byte-bridge-044c48f5039e.herokuapp.com/)
+[Link to the deployed application](https://byte-bridge-044c48f5039e.herokuapp.com/)
 
 ## Built With
 
@@ -60,10 +60,10 @@ npm run develop
 
 ## Questions
 
-To view my Stehpan's repositories:
-[Github](https://github.com/turtlesrus01) to view Kelvin's repositories [Github](https://github.com/That-Dude13)
+To view our repositories:
+  [Kelvin E.](https://github.com/That-Dude13) & [Stefan P.](https://github.com/turtlesrus01)
 
-If you have questions about this application or general inquiry, please reach out to Kelvin Easiley or Stephan Palacios via email at: keasiley@gmail.com and stefan.palacios@gmail.com respectively.
+If you have questions about this application or general inquiry, please reach out to Kelvin Easiley or Stefan Palacios via email at: keasiley@gmail.com and stefan.palacios@gmail.com respectively.
 
 This project is covered under the MIT License.
 
