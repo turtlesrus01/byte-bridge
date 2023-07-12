@@ -17,6 +17,8 @@ import MuiAlert from "@mui/material/Alert";
 import { LOGIN_USER } from "../utils/mutations";
 import { UserContext, SET_LOGIN_STATUS } from "../utils/UserContext";
 import Auth from "../utils/auth";
+import CalendarEmail from "./CalendarEmail";
+
 
 const Login = (props) => {
   const [formState, setFormState] = useState({ email: "", password: "" });
@@ -73,15 +75,16 @@ const Login = (props) => {
               color: "light",
               padding: "2px",
             }}
-          >
-            <Typography variant="h4">Login</Typography>
-          </Box>
+          
+          ></Box>
+            
+         
           <div className="card-body">
             {data ? (
               <Snackbar open={true} autoHideDuration={3000}>
                 <MuiAlert severity="success">
                   Success! You may now head{" "}
-                  <Link to="/">back to the homepage.</Link>
+                  <Link to="./CalendarEmail">back to the homepage.</Link>
                 </MuiAlert>
               </Snackbar>
             ) : (
@@ -91,9 +94,9 @@ const Login = (props) => {
                   color="primary"
                   onClick={handleModalOpen}
                 >
-                  Open Login Modal
+                 Click Here to Login
                 </Button>
-
+                
                 <Modal open={modalOpen} onClose={handleModalClose}>
                   <Box
                     sx={{

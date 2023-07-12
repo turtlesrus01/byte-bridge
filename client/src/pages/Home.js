@@ -7,6 +7,8 @@ import { Button, Typography, Box, Grid, Container} from "@mui/material";
 //import { Link } from "react-router-dom";
 import Auth from "../utils/auth";
 import hero from "../assets/img/pexels-fabian-reitmeier-707915.jpg";
+import Login  from "./Login";
+
 
 const Home = () => {
   // Access the state from UserContext
@@ -15,6 +17,7 @@ const Home = () => {
   const handleLogin = () => {
     // Dispatch action to set login status to true
     dispatch({ type: SET_LOGIN_STATUS, payload: true });
+    
   };
 
   const handleLogout = () => {
@@ -57,9 +60,9 @@ const Home = () => {
               <br/>
               The app provides a user-friendly interface, allowing realtors and home buyers to communicate and coordinate effortlessly. Byte-Bridge streamlines the scheduling process, saving time and reducing the stress often associated with property viewings. Experience a new level of convenience and organization with Byte-Bridge for all your real estate scheduling needs.
               </Typography>
-              <Button variant="contained" onClick={handleLogin}>
-                Login
-              </Button>
+              
+                <Login onClick={handleLogin}/>
+              
             </Box>
           </Grid>
         </Grid>
