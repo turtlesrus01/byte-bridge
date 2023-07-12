@@ -27,11 +27,7 @@ const Header = () => {
           <div className="container flex-row justify-space-between-lg justify-center align-center">
             <div>
               <Link className="text-light" to="/" underline="none">
-                <Typography
-                  variant="h3"
-                  component="h3"
-                  color="white"
-                >
+                <Typography variant="h3" component="h3" color="white">
                   Byte-Bridge
                 </Typography>
               </Link>
@@ -41,36 +37,42 @@ const Header = () => {
             </div>
             <div>
               {Auth.loggedIn() ? (
-                <Tabs value={location.pathname}>
-                  <Tab
-                    label={`${Auth.getProfile().data.username}'s profile`}
-                    value="/me"
+                <>
+                  <Button
                     component={Link}
                     to="/me"
-                  />
+                    variant="inherit"
+                    className="btn btn-lg btn-light m-2"
+                  >
+                    {`${Auth.getProfile().data.username}'s profile`}
+                  </Button>
                   <Button
                     variant="outlined"
                     className="btn btn-lg btn-light m-2"
                     onClick={logout}
                   >
-                    Logout
+                    <Typography variant="body1">Logout</Typography>
                   </Button>
-                </Tabs>
+                </>
               ) : (
-                <Tabs value={location.pathname}>
-                  <Tab
-                    label="Login"
-                    value="/login"
+                <>
+                  <Button
                     component={Link}
                     to="/login"
-                  />
-                  <Tab
-                    label="Signup"
-                    value="/signup"
+                    variant="inherit"
+                    className="btn btn-lg btn-light m-2"
+                  >
+                    <Typography variant="body1">Login</Typography>
+                  </Button>
+                  <Button
                     component={Link}
                     to="/signup"
-                  />
-                </Tabs>
+                    variant="inherit"
+                    className="btn btn-lg btn-light m-2"
+                  >
+                    <Typography variant="body1">Signup</Typography>
+                  </Button>
+                </>
               )}
             </div>
           </div>

@@ -56,7 +56,7 @@ const Home = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Box>
-                  <Typography variant="body1" paragraph="true">
+                  <Typography variant="body1">
                     Byte-Bridge is a cutting-edge scheduling app designed specifically for realtors and home buyers. With Byte-Bridge, the process of scheduling property viewings and appointments becomes seamless and efficient. Realtors can easily manage their listings, availability, and client appointments all in one place, while home buyers can conveniently browse available properties and request viewings.
                     <br />
                     The app provides a user-friendly interface, allowing realtors and home buyers to communicate and coordinate effortlessly. Byte-Bridge streamlines the scheduling process, saving time and reducing the stress often associated with property viewings. Experience a new level of convenience and organization with Byte-Bridge for all your real estate scheduling needs.
