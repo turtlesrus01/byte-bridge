@@ -21,6 +21,8 @@ import Footer from "./components/Footer";
 import CalendarProps from "./components/CalendarProps";
 import CalendarEmail from "./pages/CalendarEmail";
 // import Calendar from "./pages/Calendar";
+// Mui theme
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 // GraphQL endpoint
 const httpLink = createHttpLink({
@@ -48,29 +50,44 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+// Font Family import
+const theme = createTheme({
+  typography: {
+    fontFamily: [ 'Arial', 'sans-serif'].join(','),
+    h3: {
+      fontFamily: 'Caprasimo',
+    },
+    body1: {
+      fontFamily: 'Rubik',
+    }
+  },
+});
+
 function App() {
   return (
-    <ApolloProvider client={client}>
-      <UserProvider>
-        <Router>
-          <div className="flex-column justify-flex-start min-100-vh">
-            <Header />
-            <div className="container">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/me" element={<Profile />} />
-                <Route path="/profiles/:username" element={<Profile />} />
-                <Route path="/calendarprops" element={<CalendarProps />} />
-                <Route path="/calendaremail" element={<CalendarEmail />} />
-              </Routes>
+    <ThemeProvider theme={theme}>
+      <ApolloProvider client={client}>
+        <UserProvider>
+          <Router>
+            <div className="flex-column justify-flex-start min-100-vh">
+              <Header />
+              <div className="container">
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/signup" element={<Signup />} />
+                  <Route path="/me" element={<Profile />} />
+                  <Route path="/profiles/:username" element={<Profile />} />
+                  <Route path="/calendarprops" element={<CalendarProps />} />
+                  <Route path="/calendaremail" element={<CalendarEmail />} />
+                </Routes>
+              </div>
+              <Footer />
             </div>
-            <Footer />
-          </div>
-        </Router>
-      </UserProvider>
-    </ApolloProvider>
+          </Router>
+        </UserProvider>
+      </ApolloProvider>
+    </ThemeProvider>
   );
 }
 

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link, useNavigate  } from "react-router-dom";
+import { useNavigate  } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 
 //MUI components
@@ -16,7 +16,6 @@ import MuiAlert from "@mui/material/Alert";
 import { LOGIN_USER } from "../utils/mutations";
 import { UserContext, SET_LOGIN_STATUS } from "../utils/UserContext";
 import Auth from "../utils/auth";
-import CalendarEmail from "./CalendarEmail";
 
 const Login = (props) => {
   const [formState, setFormState] = useState({ email: "", password: "" });

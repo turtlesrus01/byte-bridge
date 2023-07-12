@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 // Import the UserContext
 import { UserContext, SET_LOGIN_STATUS } from "../utils/UserContext";
 // Import the components
@@ -8,6 +8,8 @@ import { Button, Typography, Box, Grid, Container } from "@mui/material";
 //import { Link } from "react-router-dom";
 import Auth from "../utils/auth";
 import hero from "../assets/img/pexels-fabian-reitmeier-707915.jpg";
+// Font Family
+import Caprasimo from "../assets/fonts/Caprasimo-Regular.ttf";
 
 const Home = () => {
   // Access the state from UserContext
@@ -38,8 +40,8 @@ const Home = () => {
         <Container maxWidth="lg">
           <Box className="col-12 col-md-6 mb-3 p-3">
             <Box mb={3}>
-              <Typography variant="h3" component="h3">
-                HOMEPAGE
+              <Typography variant="h3" component="h3" sx={{fontFamily: Caprasimo}}>
+                Welcome to the Homepage
               </Typography>
             </Box>
             <Grid container justifyContent="center" alignItems="center">

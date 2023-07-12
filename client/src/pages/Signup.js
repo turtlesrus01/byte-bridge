@@ -51,7 +51,7 @@ const Signup = () => {
     <Container maxWidth="sm">
       <Box display="flex" justifyContent="center" mt={4} mb={4}>
         <div>
-          <Typography variant="h6" component="h4">Sign Up</Typography>
+          <Typography variant="h3" component="h3" sx={{my: 2}}>Sign Up</Typography>
           <Snackbar open={Boolean(data)} autoHideDuration={3000}>
             <Alert severity="success">
               Success! You may now head{" "}
@@ -96,7 +96,7 @@ const Signup = () => {
               color="primary"
               style={{ cursor: "pointer" }}
               type="submit"
-              sx={{ my: 1}}
+              sx={{ my: 2}}
             >
               Submit
             </Button>
