@@ -1,4 +1,7 @@
-const { AuthenticationError, UserInputError } = require("apollo-server-express");
+const {
+  AuthenticationError,
+  UserInputError,
+} = require("apollo-server-express");
 const { User, CalendarEvent } = require("../models");
 const { signToken } = require("../utils/auth");
 
@@ -26,7 +29,9 @@ const resolvers = {
         return { token, user };
       } catch (error) {
         if (error.name === "ValidationError") {
-          throw new UserInputError("Invalid input", { invalidArgs: error.errors });
+          throw new UserInputError("Invalid input", {
+            invalidArgs: error.errors,
+          });
         } else if (error.name === "MongoError" && error.code === 11000) {
           throw new UserInputError("User with this email already exists");
         }
@@ -42,12 +47,47 @@ const resolvers = {
       return { token, user };
     },
     addCalendarEvent: async (parent, { input }) => {
-      const calendarEvent = await CalendarEvent.create(input);
+      const {
+        id,
+        title,
+        description,
+        startDate,
+        endDate,
+        location,
+        allDay,
+        userId,
+      } = input;
+
+      // Validate the presence of required fields
+      if (
+        !title ||
+        !description ||
+        !startDate ||
+        !endDate ||
+        !location ||
+        !userId
+      ) {
+        throw new UserInputError("Missing required fields");
+      }
+
+      const calendarEvent = await CalendarEvent.create({
+        _id: id,
+        title,
+        description,
+        startDate,
+        endDate,
+        location,
+        allDay,
+        userID: userId,
+      });
+
       return calendarEvent;
     },
     updateCalendarEvent: async (parent, { input }) => {
       const { id, ...updates } = input;
-      const updatedEvent = await CalendarEvent.findByIdAndUpdate(id, updates, { new: true });
+      const updatedEvent = await CalendarEvent.findByIdAndUpdate(id, updates, {
+        new: true,
+      });
       if (!updatedEvent) {
         throw new UserInputError("Calendar event not found");
       }
