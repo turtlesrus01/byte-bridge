@@ -34,7 +34,22 @@ function TestCalendar({
   // Add a new event
   const handleAddCalendarEvent = async () => {
     try {
-      const response = await addEvent({
+      if (!eventStartDate || !eventEndDate) {
+        throw new Error("Missing start date or end date");
+      }
+
+      console.log({
+        id: eventId,
+        title: eventTitle,
+        description: eventDescription,
+        startDate: eventStartDate.toISOString(),
+        endDate: eventEndDate.toISOString(),
+        location: eventLocation,
+        allDay: eventAllDay,
+        userId: userId,
+      });
+      
+      const { data } = await addEvent({
         variables: {
           id: eventId,
           title: eventTitle,
@@ -47,7 +62,7 @@ function TestCalendar({
         },
       });
 
-      console.log("Event added:", response);
+      console.log("Event added:", data);
       // Perform any other operations or display notifications/alerts based on the response
     } catch (error) {
       console.error("Error adding event:", error);
