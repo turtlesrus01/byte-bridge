@@ -1,6 +1,14 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Paper, Typography, Button, AppBar, Toolbar, Tab, Tabs  } from "@mui/material";
+import {
+  Paper,
+  Typography,
+  Button,
+  AppBar,
+  Toolbar,
+  Tab,
+  Tabs,
+} from "@mui/material";
 
 import Auth from "../../utils/auth";
 
@@ -18,8 +26,14 @@ const Header = () => {
         <Toolbar>
           <div className="container flex-row justify-space-between-lg justify-center align-center">
             <div>
-              <Link className="text-light" to="/">
-                <Typography variant="h4">Byte-Bridge</Typography>
+              <Link className="text-light" to="/" underline="none">
+                <Typography
+                  variant="h3"
+                  component="h3"
+                  color="white"
+                >
+                  Byte-Bridge
+                </Typography>
               </Link>
               <Typography variant="body1">
                 Realty Scheduling Solutions.
