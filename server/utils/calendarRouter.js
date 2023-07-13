@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const CalendarEvent = require('../models/CalendarEvent');
 
-router.post('/calendar-requests', async (req, res) => {
+router.post('/calendar', async (req, res) => {
   try {
     // Create a new calendar request instance using the data from the request body
     const newCalendarRequest = new CalendarEvent(req.body);

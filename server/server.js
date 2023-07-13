@@ -47,6 +47,17 @@ const startApolloServer = async () => {
   });
 };
 
+app.post('/CalendarForm', (req, res) => {
+  const {data} = req.body;
+  console.log(data);
+  console.log(req.body);
+});
+
+
+  db.collection('CalendarForm').insertOne(req.body);
+
+  console.log(req.body);
+
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => {

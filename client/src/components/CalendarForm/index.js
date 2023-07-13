@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TextField, Button, Grid } from "@mui/material";
 import TestCalendar from "../TestCalendar";
 
-function CalendarPage() {
+function CalendarForm() {
   const [formData, setFormData] = useState({
     userId: "",
     eventId: "",
@@ -21,13 +21,13 @@ function CalendarPage() {
     });
   };
 
-  const API_URL = Access-Control-Allow-Origin: 'http://localhost:3000'
+  const API_URL = 'http://localhost:3001/calendar';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       // Perform API request to create instance in the database
-      const response = await fetch( `${API_URL}/CalendarPage`, {
+      const response = await fetch( `${API_URL}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -122,4 +122,4 @@ function CalendarPage() {
   );
 }
 
-export default CalendarPage;
+export default CalendarForm;
