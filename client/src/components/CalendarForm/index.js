@@ -21,7 +21,7 @@ function CalendarPage() {
     });
   };
 
-  const API_URL = "http://localhost:3001"
+  const API_URL = Access-Control-Allow-Origin: 'http://localhost:3000'
 
   const handleSubmit = async (e) => {
     e.preventDefault();

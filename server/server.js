@@ -4,6 +4,7 @@ const path = require("path");
 const { authMiddleware } = require("./utils/auth");
 const { typeDefs, resolvers } = require("./schema");
 const db = require("./config/connection");
+const cors = require("cors");
 require("dotenv").config();
 
 //Port for the server
@@ -29,6 +30,7 @@ app.get('/', (req, res) => {
 //Express middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(cors());
 
 //Apollo server middleware
 const startApolloServer = async () => {
@@ -45,14 +47,6 @@ const startApolloServer = async () => {
   });
 };
 
-// Creating URL for Calendar CRUD
-
-mongoose.connect('mongodb://localhost:27017/byte-bridge', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => {
