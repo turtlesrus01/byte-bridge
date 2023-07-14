@@ -7,19 +7,30 @@ const expiration = "2h";
 
 module.exports = {
   authMiddleware: function ({ req }) {
+    // Logs entire header
+    console.log("Request Headers:", req.headers);
+
     let token = getTokenFromRequest(req);
+
+    // Logs the token value
+    console.log("Token:", token); 
 
     if (!token) {
       return req;
     }
 
     try {
-      const { data } = jwt.verify(token, jwtSecret, {
+      const decodedToken = jwt.verify(token, jwtSecret, {
         maxAge: expiration,
       });
+      // Decoded token
+      console.log("Decoded Token:", decodedToken); 
+
       req.user = data;
-    } catch {
-      console.log("Invalid token");
+    } catch (error) {
+      console.log("Invalid token", error);
+      // Log the error if token is invalid or expired
+      throw new AuthenticationError("Invalid or expired token");
     }
 
     return req;
@@ -36,11 +47,11 @@ function getTokenFromRequest(req) {
   let token = req.headers.authorization;
 
   if (token) {
-    if (token.startsWith("Bearer ")) {
+    if (token.toLowerCase().startsWith("bearer ")) {
       // Removes the "Bearer " prefix
       token = token.slice(7); 
     } else {
-      throw new Error("Invalid token format");
+      return { error: "Invalid token format" };
     }
   }
 
